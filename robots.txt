@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://invictureal.github.io/water-intake-calculator//sitemap.xml
+Sitemap: https://invictureal.github.io/water-intake-calculator/sitemap.xml
