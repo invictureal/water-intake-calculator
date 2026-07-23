@@ -1194,11 +1194,10 @@
   const CUP_ML = 237;
   const MAX_ML = 6000;
   const MIN_ML = 1200;
-  const BASE_PER_KG = 33; // default, will be overridden by age
+  const BASE_PER_KG = 33;
   const BSA_REF = 1.73;
   const BSA_SCALE = 400;
   const BSA_CLAMP = 250;
-  const STORAGE_KEY = 'water_intake_data';
   const THEME_KEY = 'water_intake_theme';
   const FORM_KEY = 'water_intake_form';
   const LOG_KEY = 'water_intake_log';
@@ -1230,7 +1229,6 @@
   const heightError = $('#heightError');
   const ageError = $('#ageError');
 
-  // Result elements
   const resultL = $('#resultL');
   const resultMl = $('#resultMl');
   const eqGlasses = $('#eqGlasses');
@@ -1246,7 +1244,6 @@
   const hydrationBadge = $('#hydrationBadge');
   const scheduleGrid = $('#scheduleGrid');
 
-  // Logger elements
   const logFill = $('#logFill');
   const logPercent = $('#logPercent');
   const logSummary = $('#logSummary');
@@ -1259,8 +1256,6 @@
   const historyDisplay = $('#historyDisplay');
   const historyPopup = $('#historyPopup');
   const historyDays = $('#historyDays');
-
-  // Adjustment
   const adjustmentDisplay = $('#adjustmentDisplay');
   const adjBtns = $$('.adj-btn');
 
@@ -1269,13 +1264,164 @@
   let heightUnit = 'cm';
   let activityVal = 0;
   let weatherVal = 250;
-  let currentResult = null; // { totalMl, liters, glasses, bottles, cups, base, activityVal, weatherVal, healthVal, bsaAdjust, bmi, bmiCategory, bmiCls, hydrationStatus, hydrationCls, hydrationDesc, schedule, pct, adjustedTotalMl? }
-  let todaysLog = { date: '', logged: 0 }; // logged in ml
+  let currentResult = null;
+  let todaysLog = { date: '', logged: 0 };
   let streak = 0;
-  let history = []; // array of { date, completed } for last 7 days
-  let adjustment = 0; // extra ml added via quick adjustments
-
+  let history = [];
+  let adjustment = 0;
   let toastTimeout = null;
+
+  // ========== CITIES ==========
+  const CITIES = [
+    ['New York, USA', 40.71, -74.01], ['Los Angeles, USA', 34.05, -118.24],
+    ['Toronto, Canada', 43.65, -79.38], ['Mexico City, Mexico', 19.43, -99.13],
+    ['São Paulo, Brazil', -23.55, -46.63], ['Buenos Aires, Argentina', -34.60, -58.38],
+    ['London, UK', 51.51, -0.13], ['Paris, France', 48.85, 2.35],
+    ['Berlin, Germany', 52.52, 13.40], ['Madrid, Spain', 40.42, -3.70],
+    ['Rome, Italy', 41.90, 12.50], ['Amsterdam, Netherlands', 52.37, 4.90],
+    ['Stockholm, Sweden', 59.33, 18.07], ['Warsaw, Poland', 52.23, 21.01],
+    ['Moscow, Russia', 55.76, 37.62], ['Istanbul, Turkey', 41.01, 28.98],
+    ['Dubai, UAE', 25.20, 55.27], ['Riyadh, Saudi Arabia', 24.71, 46.68],
+    ['Tel Aviv, Israel', 32.08, 34.78], ['Tehran, Iran', 35.69, 51.39],
+    ['Cairo, Egypt', 30.04, 31.24], ['Lagos, Nigeria', 6.52, 3.38],
+    ['Nairobi, Kenya', -1.29, 36.82], ['Johannesburg, South Africa', -26.20, 28.05],
+    ['Mumbai, India', 19.08, 72.88], ['Delhi, India', 28.61, 77.21],
+    ['Bangalore, India', 12.97, 77.59], ['Karachi, Pakistan', 24.86, 67.00],
+    ['Dhaka, Bangladesh', 23.81, 90.41], ['Beijing, China', 39.90, 116.41],
+    ['Shanghai, China', 31.23, 121.47], ['Tokyo, Japan', 35.68, 139.65],
+    ['Seoul, South Korea', 37.57, 126.98], ['Singapore', 1.35, 103.82],
+    ['Bangkok, Thailand', 13.76, 100.50], ['Jakarta, Indonesia', -6.21, 106.85],
+    ['Manila, Philippines', 14.60, 120.98], ['Kuala Lumpur, Malaysia', 3.14, 101.69],
+    ['Sydney, Australia', -33.87, 151.21], ['Melbourne, Australia', -37.81, 144.96],
+  ].sort((a,b)=> a[0].localeCompare(b[0]));
+
+  // ========== POPULATE CITY SELECT ==========
+  CITIES.forEach(([name, lat, lon])=>{
+    const opt = document.createElement('option');
+    opt.value = `${lat},${lon}`;
+    opt.textContent = name;
+    locationSelect.appendChild(opt);
+  });
+
+  // ========== UNIT TOGGLES ==========
+  $$('[data-unit]').forEach(btn=>{
+    btn.addEventListener('click', function(){
+      $$('[data-unit]').forEach(b=>{ b.classList.remove('active'); b.setAttribute('aria-pressed','false'); });
+      this.classList.add('active');
+      this.setAttribute('aria-pressed','true');
+      weightUnit = this.dataset.unit;
+      weightInput.placeholder = weightUnit === 'kg' ? 'e.g. 68' : 'e.g. 150';
+      saveFormState();
+    });
+  });
+
+  $$('[data-hunit]').forEach(btn=>{
+    btn.addEventListener('click', function(){
+      $$('[data-hunit]').forEach(b=>{ b.classList.remove('active'); b.setAttribute('aria-pressed','false'); });
+      this.classList.add('active');
+      this.setAttribute('aria-pressed','true');
+      heightUnit = this.dataset.hunit;
+      if(heightUnit === 'cm'){
+        cmRow.style.display='flex';
+        ftInRow.classList.remove('show');
+        heightInput.required = true;
+        heightFt.required = false;
+        heightIn.required = false;
+      } else {
+        cmRow.style.display='none';
+        ftInRow.classList.add('show');
+        heightInput.required = false;
+        heightFt.required = true;
+        heightIn.required = true;
+      }
+      saveFormState();
+    });
+  });
+
+  // ========== PILL GROUPS ==========
+  function wirePillGroup(id, setter){
+    const group = document.getElementById(id);
+    if(!group) return;
+    group.querySelectorAll('.pill').forEach(btn=>{
+      btn.addEventListener('click', function(){
+        group.querySelectorAll('.pill').forEach(b=>{ b.classList.remove('active'); b.setAttribute('aria-pressed','false'); });
+        this.classList.add('active');
+        this.setAttribute('aria-pressed','true');
+        setter(Number(this.dataset.val));
+        saveFormState();
+      });
+    });
+  }
+  wirePillGroup('activityGroup', v => { activityVal = v; });
+  wirePillGroup('weatherGroup', v => { weatherVal = v; });
+
+  // ========== WEATHER API (FIXED) ==========
+  function applyTemperature(tempC, label){
+    let targetVal, pillIndex;
+    if(tempC < 15){ targetVal = 0; pillIndex = 0; }
+    else if(tempC <= 28){ targetVal = 250; pillIndex = 1; }
+    else { targetVal = 750; pillIndex = 2; }
+
+    const pills = document.querySelectorAll('#weatherGroup .pill');
+    pills.forEach((p,i)=>{
+      p.classList.toggle('active', i===pillIndex);
+      p.setAttribute('aria-pressed', i===pillIndex ? 'true' : 'false');
+    });
+    weatherVal = targetVal;
+
+    weatherStatus.textContent = `${label}: ${Math.round(tempC)}°C detected — weather set automatically (you can still override above).`;
+    weatherStatus.className = 'weather-status ok';
+    saveFormState();
+  }
+
+  async function fetchTemperature(lat, lon, label){
+    weatherStatus.textContent = 'Checking current temperature…';
+    weatherStatus.className = 'weather-status';
+    try{
+      // Using the stable current_weather endpoint
+      const res = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current_weather=true`);
+      if(!res.ok) throw new Error('bad response');
+      const data = await res.json();
+      const tempC = data.current_weather && data.current_weather.temperature;
+      if(typeof tempC !== 'number') throw new Error('no temp');
+      applyTemperature(tempC, label);
+    } catch(err){
+      weatherStatus.textContent = "Couldn't fetch live temperature — please select Weather manually.";
+      weatherStatus.className = 'weather-status err';
+    }
+  }
+
+  locationSelect.addEventListener('change', function(){
+    if(!this.value) return;
+    const [lat, lon] = this.value.split(',').map(Number);
+    fetchTemperature(lat, lon, this.options[this.selectedIndex].text);
+    saveFormState();
+  });
+
+  geoBtn.addEventListener('click', function(){
+    if(!navigator.geolocation){
+      weatherStatus.textContent = 'Location detection is not supported in this browser.';
+      weatherStatus.className = 'weather-status err';
+      return;
+    }
+    this.disabled = true;
+    weatherStatus.textContent = 'Detecting your location…';
+    weatherStatus.className = 'weather-status';
+    navigator.geolocation.getCurrentPosition(
+      (pos)=>{
+        geoBtn.disabled = false;
+        locationSelect.value = '';
+        fetchTemperature(pos.coords.latitude, pos.coords.longitude, 'Your location');
+        saveFormState();
+      },
+      ()=>{
+        geoBtn.disabled = false;
+        weatherStatus.textContent = 'Location permission denied — please select a city or Weather manually.';
+        weatherStatus.className = 'weather-status err';
+      },
+      { timeout: 8000 }
+    );
+  });
 
   // ========== LOCAL STORAGE HELPERS ==========
   function loadData(){
@@ -1287,30 +1433,18 @@
         if(data.date === today){
           todaysLog = data;
         } else {
-          // new day, save previous day's completion
-          const prevDate = data.date;
-          const prevLogged = data.logged || 0;
-          // we need to know target for that day? we can store target with log
-          // for simplicity, we'll check if prevLogged >= target from that day? we don't store target.
-          // We'll compute target based on previous inputs? Not stored. So we'll just track if logged > 0.
-          // Better: store target in log data.
-          // We'll extend log data to include target. For now, we'll not store history automatically.
-          // We'll compute completion when user calculates and logs.
-          // We'll store history separately.
           todaysLog = { date: today, logged: 0 };
         }
       } else {
         const today = new Date().toISOString().split('T')[0];
         todaysLog = { date: today, logged: 0 };
       }
-      // Load history
       const histRaw = localStorage.getItem('water_history');
       if(histRaw){
         history = JSON.parse(histRaw);
       } else {
         history = [];
       }
-      // Load streak
       const streakRaw = localStorage.getItem('water_streak');
       if(streakRaw){
         streak = parseInt(streakRaw,10) || 0;
@@ -1332,7 +1466,6 @@
   function updateLogUI(){
     const today = new Date().toISOString().split('T')[0];
     if(todaysLog.date !== today){
-      // reset for new day
       todaysLog = { date: today, logged: 0 };
       saveLog();
     }
@@ -1350,7 +1483,6 @@
 
   function updateHistoryUI(){
     const today = new Date().toISOString().split('T')[0];
-    // show last 7 days including today
     const days = [];
     for(let i=6; i>=0; i--){
       const d = new Date();
@@ -1380,17 +1512,14 @@
     todaysLog.logged = (todaysLog.logged || 0) + amount;
     saveLog();
     updateLogUI();
-    // check if target met
     const target = currentResult.totalMl + adjustment;
     if(target > 0 && todaysLog.logged >= target){
-      // mark today as completed in history
       const existing = history.find(h => h.date === today);
       if(existing){
         existing.completed = true;
       } else {
         history.push({ date: today, completed: true });
       }
-      // update streak
       let streakCount = 0;
       const sorted = history.sort((a,b)=> new Date(a.date) - new Date(b.date));
       for(let i=sorted.length-1; i>=0; i--){
@@ -1406,41 +1535,14 @@
       updateHistoryUI();
       showToast('🎉 Goal reached! Keep it up!', 'success', 2000);
     } else {
-      // if not met, ensure today not marked completed
       const existing = history.find(h => h.date === today);
       if(existing && existing.completed){
-        // if user logged but not met? we keep completed true only if met
-        // we'll recompute
         const targetNow = currentResult.totalMl + adjustment;
         if(todaysLog.logged < targetNow){
           existing.completed = false;
           saveLog();
           updateHistoryUI();
         }
-      }
-    }
-    // re-check completion
-    const targetNow = currentResult.totalMl + adjustment;
-    if(todaysLog.logged >= targetNow){
-      const existing = history.find(h => h.date === today);
-      if(!existing || !existing.completed){
-        if(existing) existing.completed = true;
-        else history.push({ date: today, completed: true });
-        // update streak
-        let streakCount = 0;
-        const sorted = history.sort((a,b)=> new Date(a.date) - new Date(b.date));
-        for(let i=sorted.length-1; i>=0; i--){
-          if(sorted[i].completed){
-            streakCount++;
-          } else {
-            break;
-          }
-        }
-        streak = streakCount;
-        saveLog();
-        updateStreakUI();
-        updateHistoryUI();
-        showToast('🎉 Goal reached! Keep it up!', 'success', 2000);
       }
     }
     showToast(`Logged ${amount} ml 💧`, 'info', 1500);
@@ -1600,7 +1702,6 @@ Generated using Water Intake Calculator`;
     y += 2;
     hr();
 
-    // Log summary
     text('Today\'s Log', 14, 'bold');
     const logged = todaysLog.logged || 0;
     const target = adjustedTotal;
@@ -1696,7 +1797,6 @@ Generated using Water Intake Calculator`;
   }
 
   function generateSchedule(totalMl){
-    // if age > 65, use more frequent smaller sips
     const age = parseInt(ageInput.value,10);
     let times;
     if(age > 65){
@@ -1705,7 +1805,6 @@ Generated using Water Intake Calculator`;
       times = ['8:00 AM','10:00 AM','12:00 PM','2:00 PM','4:00 PM','6:00 PM','8:00 PM','10:00 PM'];
     }
     const count = times.length;
-    let remaining = totalMl;
     const amounts = [];
     const base = Math.floor(totalMl / count);
     let extra = totalMl - base * count;
@@ -1727,7 +1826,6 @@ Generated using Water Intake Calculator`;
   form.addEventListener('submit', function(e){
     e.preventDefault();
 
-    // Validate age
     const age = parseInt(ageInput.value,10);
     if(!age || age <= 0){
       ageError.textContent = 'Please enter a valid age.';
@@ -1737,7 +1835,6 @@ Generated using Water Intake Calculator`;
     }
     ageError.style.display='none';
 
-    // Validate weight
     let weightKg = parseFloat(weightInput.value);
     if(!weightKg || weightKg <= 0) {
       weightError.textContent = 'Please enter a valid weight.';
@@ -1770,18 +1867,14 @@ Generated using Water Intake Calculator`;
     }
     heightError.style.display='none';
 
-    // Determine baseline coefficient based on age
     let coeff;
     if(age < 18) coeff = 35;
     else if(age <= 65) coeff = 33;
     else coeff = 30;
 
     const healthVal = Number(healthSelect.value);
-
-    // Base
     const base = weightKg * coeff;
 
-    // BSA
     const bsa = Math.sqrt((heightCm * weightKg) / 3600);
     let bsaAdjust = (bsa - BSA_REF) * BSA_SCALE;
     bsaAdjust = Math.max(-BSA_CLAMP, Math.min(BSA_CLAMP, bsaAdjust));
@@ -1789,16 +1882,13 @@ Generated using Water Intake Calculator`;
     let totalMl = base + activityVal + weatherVal + healthVal + bsaAdjust;
     totalMl = Math.max(MIN_ML, Math.min(MAX_ML, totalMl));
 
-    // BMI
     const heightM = heightCm / 100;
     const bmi = weightKg / (heightM * heightM);
     const bmiInfo = getBMICategory(bmi);
 
-    // Hydration status
     const pct = totalMl / 3500;
     const hydInfo = getHydrationStatus(pct);
 
-    // Schedule
     const schedule = generateSchedule(totalMl);
 
     const result = {
@@ -1826,10 +1916,8 @@ Generated using Water Intake Calculator`;
     currentResult = result;
     renderResult(result);
     saveFormState();
-    // reset adjustment
     adjustment = 0;
     adjustmentDisplay.textContent = '';
-    // update log UI with new target
     updateLogUI();
     showToast('✅ Hydration target calculated!', 'success', 2000);
   });
@@ -1869,7 +1957,6 @@ Generated using Water Intake Calculator`;
     });
     gaugePct.textContent = Math.round(pct*100) + '%';
 
-    // Breakdown
     const rows = [
       ['Base (age/weight)', Math.round(d.base) + ' ml'],
       ['Activity', (d.activityVal>=0?'+':'') + Math.round(d.activityVal) + ' ml'],
@@ -1880,7 +1967,6 @@ Generated using Water Intake Calculator`;
     breakdown.innerHTML = rows.map(r => `<div class="breakdown-row"><span>${r[0]}</span><b>${r[1]}</b></div>`).join('')
       + `<div class="breakdown-row total"><span>Total</span><b>${Math.round(d.totalMl)} ml</b></div>`;
 
-    // Tip (including age-specific)
     let ageTip = '';
     const age = parseInt(ageInput.value,10);
     if(age > 65){
@@ -1902,13 +1988,11 @@ Generated using Water Intake Calculator`;
     hydrationStatusValue.textContent = d.hydrationStatus;
     hydrationBadge.innerHTML = `<span class="badge ${d.hydrationCls}">${d.hydrationStatus}</span>`;
 
-    // Schedule
     scheduleGrid.innerHTML = d.schedule.map(s =>
       `<div class="schedule-item"><span class="time">${s.time}</span><span class="amount">${s.amount} ml</span></div>`
     ).join('');
 
     resultCard.scrollIntoView({behavior:'smooth', block:'nearest'});
-    // update log UI
     updateLogUI();
   }
 
@@ -1923,7 +2007,6 @@ Generated using Water Intake Calculator`;
       adjustment = (adjustment || 0) + add;
       if(adjustment < 0) adjustment = 0;
       adjustmentDisplay.textContent = adjustment > 0 ? `+${adjustment} ml adjustment applied` : '';
-      // Update result display to show adjusted total
       const adjustedTotal = currentResult.totalMl + adjustment;
       const liters = adjustedTotal / 1000;
       resultL.textContent = liters.toFixed(1);
@@ -1931,19 +2014,16 @@ Generated using Water Intake Calculator`;
       eqGlasses.textContent = Math.round(adjustedTotal / GLASS_ML);
       eqBottles.textContent = Math.round(adjustedTotal / BOTTLE_ML);
       eqCups.textContent = Math.round(adjustedTotal / CUP_ML);
-      // Update gauge
       const pct = Math.min(1, adjustedTotal / 3500);
       const fillY = 196 - (pct * 178);
       requestAnimationFrame(()=>{
         waveRect.setAttribute('y', fillY);
       });
       gaugePct.textContent = Math.round(pct*100) + '%';
-      // Re-generate schedule based on adjusted total
       const newSchedule = generateSchedule(adjustedTotal);
       scheduleGrid.innerHTML = newSchedule.map(s =>
         `<div class="schedule-item"><span class="time">${s.time}</span><span class="amount">${s.amount} ml</span></div>`
       ).join('');
-      // Update log target (the target for log is adjusted)
       updateLogUI();
       showToast(`Adjustment ${add>=0?'+':''}${add} ml applied`, 'info', 1500);
     });
@@ -1964,7 +2044,6 @@ Generated using Water Intake Calculator`;
   logResetBtn.addEventListener('click', function(){
     const today = new Date().toISOString().split('T')[0];
     todaysLog = { date: today, logged: 0 };
-    // remove today from history if exists
     const idx = history.findIndex(h => h.date === today);
     if(idx !== -1){
       history.splice(idx, 1);
@@ -2093,7 +2172,6 @@ Generated using Water Intake Calculator`;
 
   restoreFormState();
 
-  // Auto-save on input change
   ageInput.addEventListener('input', saveFormState);
   weightInput.addEventListener('input', saveFormState);
   heightInput.addEventListener('input', saveFormState);
@@ -2105,14 +2183,12 @@ Generated using Water Intake Calculator`;
   // ========== INIT LOGGING ==========
   loadData();
 
-  // ========== HANDLE RESIZE ==========
   let resizeTimer;
   window.addEventListener('resize', ()=>{
     if(resizeTimer) cancelAnimationFrame(resizeTimer);
     resizeTimer = requestAnimationFrame(()=>{});
   }, { passive: true });
 
-  // ========== KEYBOARD SUPPORT ==========
   document.addEventListener('keydown', function(e){
     if(e.key === 'Escape'){
       if(toast.classList.contains('show')){
