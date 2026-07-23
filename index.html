@@ -4,970 +4,229 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Water Intake Calculator — Daily Water Intake & Glasses Counter</title>
-<meta name="description" content="Free water intake calculator and daily water intake counter. Enter your weight, height, age, activity level, weather and health status to get your personal target in liters, glasses, and bottles — instantly, no sign-up.">
-<meta name="keywords" content="water intake calculator, water intake counter, water intake per day, water drinking glasses, daily water intake, how much water should I drink">
-<meta name="author" content="Water Intake Calculator">
-<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="description" content="Free water intake calculator. Enter your weight, height, age, activity level, weather and health status to get a personal daily water target in liters, glasses, and bottles.">
 <meta name="theme-color" content="#0077B6">
-<link rel="canonical" href="https://invictureal.github.io/water-intake-calculator/">
-
-<meta property="og:type" content="website">
-<meta property="og:url" content="https://invictureal.github.io/water-intake-calculator/">
-<meta property="og:site_name" content="Water Intake Calculator">
-<meta property="og:title" content="Water Intake Calculator — Daily Water Intake & Glasses Counter">
-<meta property="og:description" content="Get your personal daily water intake target in seconds — in liters, glasses, and bottles. Based on weight, height, age, activity, weather and health condition.">
-<meta property="og:image" content="https://invictureal.github.io/water-intake-calculator/og-image.png">
-<meta property="og:image:width" content="1200">
-<meta property="og:image:height" content="630">
-<meta property="og:locale" content="en_US">
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Water Intake Calculator">
-<meta name="twitter:description" content="Your personal daily water intake target in seconds — liters, glasses, and bottles.">
-<meta name="twitter:image" content="https://invictureal.github.io/water-intake-calculator/og-image.png">
-
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%92%A7%3C/text%3E%3C/svg%3E">
-<link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%3C/text%3E%3C/svg%3E">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js">
-</script>
-
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "WebApplication",
-  "name": "Water Intake Calculator",
-  "alternateName": "Water Intake Counter",
-  "url": "https://invictureal.github.io/water-intake-calculator/",
-  "applicationCategory": "HealthApplication",
-  "operatingSystem": "Any",
-  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
-  "description": "Personalized water intake calculator and daily water intake counter based on weight, height, age, activity level, weather and health condition.",
-  "keywords": "water intake calculator, water intake counter, water intake per day, water drinking glasses"
-}
-</script>
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "FAQPage",
-  "mainEntity": [
-    {
-      "@type": "Question",
-      "name": "How much water should I drink a day?",
-      "acceptedAnswer": { "@type": "Answer", "text": "Most adults need roughly 30–35 ml of water per kilogram of body weight per day, adjusted upward for activity, heat, pregnancy, breastfeeding, or illness. Use the calculator above for a number tailored to you." }
-    },
-    {
-      "@type": "Question",
-      "name": "Does coffee or tea count toward water intake?",
-      "acceptedAnswer": { "@type": "Answer", "text": "Yes, in moderation. Caffeinated drinks still contribute fluid, though water remains the best default choice." }
-    },
-    {
-      "@type": "Question",
-      "name": "Is this calculator a substitute for medical advice?",
-      "acceptedAnswer": { "@type": "Answer", "text": "No. It gives a general estimate. People with kidney, heart, or liver conditions should follow fluid guidance from their doctor instead." }
-    },
-    {
-      "@type": "Question",
-      "name": "How many glasses of water is that per day?",
-      "acceptedAnswer": { "@type": "Answer", "text": "The calculator converts your target into glasses, bottles, and cups automatically, using a standard 250 ml glass. Most adults land between 8 and 12 glasses a day depending on weight, activity, and weather." }
-    }
-  ]
-}
-</script>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
 
 <style>
   :root{
-    --deep-sea:#073B4C;
-    --ocean:#0077B6;
-    --aqua:#00B4D8;
-    --sky:#90E0EF;
-    --mist:#CAF0F8;
-    --foam:#F5FBFD;
-    --white:#FFFFFF;
-    --ink:#0B2B37;
-    --ink-soft:#4C6B75;
-    --radius-lg:28px;
-    --radius-md:18px;
-    --radius-sm:12px;
-    --shadow-soft:0 20px 45px -25px rgba(7,59,76,0.35);
+    --deep-sea:#073B4C; --ocean:#0077B6; --aqua:#00B4D8; --sky:#90E0EF; --mist:#CAF0F8; --foam:#F5FBFD;
+    --white:#FFFFFF; --ink:#0B2B37; --ink-soft:#4C6B75;
+    --radius-lg:24px; --radius-md:16px; --radius-sm:12px;
+    --shadow-card:0 20px 45px -25px rgba(7,59,76,0.35);
     --ease:cubic-bezier(.22,1,.36,1);
-    --bg-body:var(--foam);
-    --bg-card:var(--white);
-    --border-light:#DCEEF3;
-    --text-primary:var(--ink);
-    --text-secondary:var(--ink-soft);
-    --shadow-card:var(--shadow-soft);
-    --transition-speed:0.4s;
-    --gauge-bg:#F5FBFD;
-    --gauge-stroke:#DCEEF3;
-    --faq-border:#E7F3F7;
-    --hero-bg:linear-gradient(180deg,#E8F8FC 0%, var(--foam) 78%);
+    --bg-body:var(--foam); --bg-card:var(--white); --border-light:#DCEEF3;
+    --text-primary:var(--ink); --text-secondary:var(--ink-soft);
   }
-
   [data-theme="dark"]{
-    --deep-sea:#B0E0E6;
-    --ocean:#48CAE4;
-    --aqua:#90E0EF;
-    --sky:#0077B6;
-    --mist:#1A3A47;
-    --foam:#0D1B2A;
-    --white:#1B2D3A;
-    --ink:#E8F4F8;
-    --ink-soft:#A0C4D4;
-    --bg-body:#0D1B2A;
-    --bg-card:#1B2D3A;
-    --border-light:#2A4A5A;
-    --text-primary:#E8F4F8;
-    --text-secondary:#A0C4D4;
+    --deep-sea:#B0E0E6; --ocean:#48CAE4; --aqua:#90E0EF; --mist:#1A3A47; --foam:#0D1B2A; --white:#1B2D3A;
+    --bg-body:#0D1B2A; --bg-card:#1B2D3A; --border-light:#2A4A5A;
+    --text-primary:#E8F4F8; --text-secondary:#A0C4D4;
     --shadow-card:0 20px 45px -25px rgba(0,0,0,0.7);
-    --gauge-bg:#1B2D3A;
-    --gauge-stroke:#2A4A5A;
-    --faq-border:#2A4A5A;
-    --hero-bg:linear-gradient(180deg,#0D1B2A 0%, #0D1B2A 78%);
   }
-
   *{box-sizing:border-box;}
-  html{scroll-behavior:smooth;}
-  body{
-    margin:0;
-    font-family:'Inter',system-ui,sans-serif;
-    color:var(--text-primary);
-    background:var(--bg-body);
-    -webkit-font-smoothing:antialiased;
-    transition:background var(--transition-speed) var(--ease), color var(--transition-speed) var(--ease);
-  }
-  h1,h2,h3,.display{
-    font-family:'Fraunces',serif;
-    font-weight:600;
-    letter-spacing:-0.01em;
-    color:var(--deep-sea);
-    margin:0;
-  }
-  [data-theme="dark"] h1, [data-theme="dark"] h2, [data-theme="dark"] h3, [data-theme="dark"] .display{
-    color:var(--deep-sea);
-  }
-  .num{ font-family:'JetBrains Mono',monospace; }
-
-  @media (prefers-reduced-motion: reduce){
-    *{animation-duration:0.01ms !important; animation-iteration-count:1 !important; transition-duration:0.01ms !important; scroll-behavior:auto !important;}
-  }
-
-  a{color:var(--ocean);}
+  body{margin:0;font-family:'Inter',system-ui,sans-serif;color:var(--text-primary);background:var(--bg-body);transition:background .3s var(--ease),color .3s var(--ease);}
+  h1,h2{font-family:'Fraunces',serif;font-weight:600;color:var(--deep-sea);margin:0;}
+  .num{font-family:'JetBrains Mono',monospace;}
   .wrap{max-width:1040px;margin:0 auto;padding:0 24px;}
 
-  /* ---------- Dark mode toggle ---------- */
-  .theme-toggle-wrap{
-    position:fixed;
-    top:16px;
-    right:16px;
-    z-index:100;
-  }
-  .theme-toggle{
-    background:var(--bg-card);
-    border:1.5px solid var(--border-light);
-    border-radius:999px;
-    width:48px;
-    height:48px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    cursor:pointer;
-    font-size:22px;
-    box-shadow:var(--shadow-card);
-    transition:transform .2s var(--ease), background .3s var(--ease), border-color .3s var(--ease);
-    color:var(--text-primary);
-    background:var(--bg-card);
-  }
-  .theme-toggle:hover{transform:scale(1.05);}
-  .theme-toggle:focus-visible{outline:3px solid var(--ocean); outline-offset:3px;}
-  .theme-toggle .icon-sun,.theme-toggle .icon-moon{display:block;line-height:1;}
-  [data-theme="dark"] .theme-toggle .icon-sun{display:none;}
-  [data-theme="dark"] .theme-toggle .icon-moon{display:block;}
-  [data-theme="light"] .theme-toggle .icon-sun{display:block;}
-  [data-theme="light"] .theme-toggle .icon-moon{display:none;}
+  .theme-toggle-wrap{position:fixed;top:16px;right:16px;z-index:100;}
+  .theme-toggle{background:var(--bg-card);border:1.5px solid var(--border-light);border-radius:999px;width:46px;height:46px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:20px;box-shadow:var(--shadow-card);}
 
-  /* ---------- Hero ---------- */
-  .hero{
-    position:relative;
-    overflow:hidden;
-    background:var(--hero-bg);
-    padding:64px 0 20px;
-    transition:background var(--transition-speed) var(--ease);
-  }
-  .hero-inner{
-    position:relative;
-    z-index:2;
-    text-align:center;
-    padding-top:8px;
-  }
-  .eyebrow{
-    display:inline-flex;
-    align-items:center;
-    gap:8px;
-    font-size:13px;
-    font-weight:600;
-    letter-spacing:.08em;
-    text-transform:uppercase;
-    color:var(--ocean);
-    background:var(--mist);
-    padding:7px 16px;
-    border-radius:999px;
-    margin-bottom:22px;
-    transition:background var(--transition-speed) var(--ease), color var(--transition-speed) var(--ease);
-  }
-  .hero h1{
-    font-size:clamp(32px,5.2vw,54px);
-    line-height:1.08;
-    max-width:16ch;
-    margin:0 auto;
-  }
-  .hero h1 em{ color:var(--ocean); font-style:normal; }
-  .hero p{
-    max-width:52ch;
-    margin:20px auto 0;
-    color:var(--text-secondary);
-    font-size:17px;
-    line-height:1.6;
-    transition:color var(--transition-speed) var(--ease);
-  }
+  header.hero{padding:56px 0 20px;text-align:center;}
+  .eyebrow{display:inline-flex;font-size:13px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--ocean);background:var(--mist);padding:7px 16px;border-radius:999px;margin-bottom:20px;}
+  header.hero h1{font-size:clamp(28px,5vw,46px);}
+  header.hero p{max-width:52ch;margin:16px auto 0;color:var(--text-secondary);font-size:16px;line-height:1.6;}
 
-  .ripple-field{
-    position:absolute; inset:0; z-index:1; pointer-events:none;
-  }
-  .ripple{
-    position:absolute; border-radius:50%;
-    border:1.5px solid rgba(0,180,216,0.35);
-    animation:rippleOut 6s var(--ease) infinite;
-  }
-  .ripple:nth-child(1){ width:120px;height:120px; left:8%; top:20%; animation-delay:0s; }
-  .ripple:nth-child(2){ width:180px;height:180px; right:6%; top:10%; animation-delay:1.6s; }
-  .ripple:nth-child(3){ width:90px;height:90px; right:18%; bottom:0; animation-delay:3.2s; }
-  @keyframes rippleOut{
-    0%{ transform:scale(.6); opacity:0; }
-    35%{ opacity:.8; }
-    100%{ transform:scale(1.6); opacity:0; }
-  }
+  main{padding:8px 0 70px;}
+  .panels{display:grid;grid-template-columns:1.1fr 1fr;gap:26px;align-items:start;}
+  @media (max-width:860px){.panels{grid-template-columns:1fr;}}
 
-  /* ---------- Layout ---------- */
-  main{ padding:8px 0 80px; }
-  .panels{
-    display:grid;
-    grid-template-columns:1.15fr 1fr;
-    gap:28px;
-    align-items:start;
-  }
-  @media (max-width:860px){
-    .panels{ grid-template-columns:1fr; }
-  }
+  .card{background:var(--bg-card);border-radius:var(--radius-lg);box-shadow:var(--shadow-card);padding:30px;border:1px solid var(--border-light);}
 
-  .card{
-    background:var(--bg-card);
-    border-radius:var(--radius-lg);
-    box-shadow:var(--shadow-card);
-    padding:32px;
-    border:1px solid var(--border-light);
-    transition:background var(--transition-speed) var(--ease), border-color var(--transition-speed) var(--ease), box-shadow var(--transition-speed) var(--ease), transform .3s var(--ease);
-  }
-  .card:hover{
-    box-shadow:var(--shadow-card);
-  }
+  .field{margin-bottom:20px;}
+  .field label{display:block;font-size:13px;font-weight:600;color:var(--deep-sea);margin-bottom:8px;}
+  .field .hint{font-weight:400;color:var(--text-secondary);font-size:12px;margin-left:6px;}
+  .input-row{display:flex;gap:10px;flex-wrap:wrap;}
+  input[type=number]{flex:1;min-width:0;font-family:'JetBrains Mono',monospace;font-size:17px;padding:12px 14px;border:1.5px solid var(--border-light);border-radius:var(--radius-sm);background:var(--bg-body);color:var(--text-primary);}
+  input[type=number]:focus{outline:none;border-color:var(--aqua);}
 
-  /* ---------- Form ---------- */
-  .field{ margin-bottom:22px; }
-  .field:last-of-type{ margin-bottom:0; }
-  .field label{
-    display:block;
-    font-size:13px;
-    font-weight:600;
-    color:var(--deep-sea);
-    margin-bottom:9px;
-    transition:color var(--transition-speed) var(--ease);
-  }
-  [data-theme="dark"] .field label{ color:var(--deep-sea); }
-  .field .hint{
-    font-weight:400;
-    color:var(--text-secondary);
-    font-size:12px;
-    margin-left:6px;
-    transition:color var(--transition-speed) var(--ease);
-  }
-  .input-row{ display:flex; gap:10px; flex-wrap:wrap; }
-  .input-row input[type=number]{
-    flex:1;
-    min-width:0;
-    font-family:'JetBrains Mono',monospace;
-    font-size:18px;
-    font-weight:500;
-    padding:13px 14px;
-    border:1.5px solid var(--border-light);
-    border-radius:var(--radius-sm);
-    background:var(--bg-body);
-    color:var(--text-primary);
-    transition:border-color .2s var(--ease), background .2s var(--ease), color .2s var(--ease);
-  }
-  .input-row input[type=number]:focus{
-    outline:none;
-    border-color:var(--aqua);
-    background:var(--bg-card);
-  }
-  .unit-toggle{
-    display:flex;
-    border:1.5px solid var(--border-light);
-    border-radius:var(--radius-sm);
-    overflow:hidden;
-    flex-shrink:0;
-    transition:border-color var(--transition-speed) var(--ease);
-  }
-  .unit-toggle button{
-    border:none;
-    background:var(--bg-body);
-    color:var(--text-secondary);
-    font-family:'Inter',sans-serif;
-    font-weight:600;
-    font-size:13px;
-    padding:0 14px;
-    cursor:pointer;
-    transition:background .2s var(--ease), color .2s var(--ease);
-  }
-  .unit-toggle button.active{
-    background:var(--ocean);
-    color:var(--white);
-  }
-  .ft-in-row{ display:none; gap:10px; flex-wrap:wrap; }
-  .ft-in-row.show{ display:flex; }
-  .ft-in-row input{ width:100%; }
+  .unit-toggle{display:flex;border:1.5px solid var(--border-light);border-radius:var(--radius-sm);overflow:hidden;flex-shrink:0;}
+  .unit-toggle button{border:none;background:var(--bg-body);color:var(--text-secondary);font-weight:600;font-size:13px;padding:0 14px;cursor:pointer;}
+  .unit-toggle button.active{background:var(--ocean);color:#fff;}
+  .ft-in-row{display:none;gap:10px;margin-top:10px;}
+  .ft-in-row.show{display:flex;}
 
-  .pill-group{ display:flex; flex-wrap:wrap; gap:8px; }
-  .pill{
-    border:1.5px solid var(--border-light);
-    background:var(--bg-body);
-    color:var(--text-secondary);
-    padding:10px 16px;
-    border-radius:999px;
-    font-size:13.5px;
-    font-weight:600;
-    cursor:pointer;
-    transition:all .2s var(--ease);
-  }
-  .pill:hover{ border-color:var(--aqua); }
-  .pill.active{
-    background:linear-gradient(135deg,var(--ocean),var(--aqua));
-    color:var(--white);
-    border-color:transparent;
-    box-shadow:0 8px 18px -8px rgba(0,119,182,0.55);
-  }
+  .pill-group{display:flex;flex-wrap:wrap;gap:8px;}
+  .pill{border:1.5px solid var(--border-light);background:var(--bg-body);color:var(--text-secondary);padding:9px 15px;border-radius:999px;font-size:13.5px;font-weight:600;cursor:pointer;transition:all .2s var(--ease);}
+  .pill:hover{border-color:var(--aqua);}
+  .pill.active{background:linear-gradient(135deg,var(--ocean),var(--aqua));color:#fff;border-color:transparent;}
 
-  select{
-    width:100%;
-    font-family:'Inter',sans-serif;
-    font-size:15px;
-    font-weight:500;
-    padding:13px 14px;
-    border:1.5px solid var(--border-light);
-    border-radius:var(--radius-sm);
-    background:var(--bg-body) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='9'%3E%3Cpath d='M1 1l6 6 6-6' stroke='%230077B6' stroke-width='2' fill='none' stroke-linecap='round'/%3E%3C/svg%3E") no-repeat right 16px center;
-    appearance:none;
-    color:var(--text-primary);
-    cursor:pointer;
-    transition:border-color .2s var(--ease), background .2s var(--ease), color .2s var(--ease);
-  }
-  select:focus{ outline:none; border-color:var(--aqua); }
-  [data-theme="dark"] select{
-    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='9'%3E%3Cpath d='M1 1l6 6 6-6' stroke='%2348CAE4' stroke-width='2' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
-  }
+  select{width:100%;font-size:15px;font-weight:500;padding:12px 14px;border:1.5px solid var(--border-light);border-radius:var(--radius-sm);background:var(--bg-body);color:var(--text-primary);cursor:pointer;appearance:auto;}
+  select:focus{outline:none;border-color:var(--aqua);}
 
-  .geo-btn{
-    margin-top:10px;
-    background:none;
-    border:none;
-    color:var(--ocean);
-    font-size:13px;
-    font-weight:600;
-    cursor:pointer;
-    padding:2px 0;
-    text-decoration:underline;
-    text-underline-offset:3px;
-    transition:color .2s var(--ease);
-  }
-  .geo-btn:hover{ color:var(--aqua); }
-  .geo-btn:disabled{ color:var(--text-secondary); cursor:default; text-decoration:none; }
-  .weather-status{
-    margin-top:8px;
-    font-size:12.5px;
-    color:var(--text-secondary);
-    min-height:16px;
-    transition:color var(--transition-speed) var(--ease);
-  }
-  .weather-status.ok{ color:var(--ocean); font-weight:600; }
-  .weather-status.err{ color:#C4453C; }
+  .geo-btn{margin-top:8px;background:none;border:none;color:var(--ocean);font-size:13px;font-weight:600;cursor:pointer;padding:2px 0;text-decoration:underline;}
+  .geo-btn:disabled{color:var(--text-secondary);cursor:default;text-decoration:none;}
+  .weather-status{margin-top:6px;font-size:12.5px;color:var(--text-secondary);min-height:16px;}
+  .weather-status.ok{color:var(--ocean);font-weight:600;}
+  .weather-status.err{color:#C4453C;}
 
-  .calc-btn{
-    margin-top:28px;
-    width:100%;
-    border:none;
-    background:linear-gradient(135deg,var(--ocean),var(--aqua));
-    color:var(--white);
-    font-family:'Inter',sans-serif;
-    font-size:16.5px;
-    font-weight:700;
-    padding:18px 20px;
-    border-radius:var(--radius-md);
-    cursor:pointer;
-    box-shadow:0 16px 30px -14px rgba(0,119,182,0.6);
-    transition:transform .18s var(--ease), box-shadow .18s var(--ease), background .3s var(--ease);
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    gap:10px;
-  }
-  .calc-btn:hover{ transform:translateY(-3px); box-shadow:0 20px 36px -14px rgba(0,119,182,0.7); }
-  .calc-btn:active{ transform:translateY(0); }
+  .calc-btn{width:100%;border:none;background:linear-gradient(135deg,var(--ocean),var(--aqua));color:#fff;font-size:16px;font-weight:700;padding:16px 20px;border-radius:var(--radius-md);cursor:pointer;box-shadow:0 14px 26px -14px rgba(0,119,182,0.6);}
+  .calc-btn:hover{transform:translateY(-2px);}
+  .reset-btn{border:1.5px solid var(--border-light);background:var(--bg-body);color:var(--text-primary);font-weight:600;border-radius:var(--radius-md);cursor:pointer;padding:16px;}
 
-  .action-row{
-    display:flex;
-    gap:10px;
-    flex-wrap:wrap;
-    margin-top:16px;
-  }
-  .action-btn{
-    flex:1;
-    min-width:80px;
-    border:1.5px solid var(--border-light);
-    background:var(--bg-body);
-    color:var(--text-primary);
-    font-family:'Inter',sans-serif;
-    font-weight:600;
-    font-size:13px;
-    padding:10px 12px;
-    border-radius:var(--radius-sm);
-    cursor:pointer;
-    transition:all .2s var(--ease);
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    gap:6px;
-  }
-  .action-btn:hover{
-    border-color:var(--ocean);
-    background:var(--mist);
-    transform:translateY(-2px);
-  }
-  [data-theme="dark"] .action-btn:hover{
-    background:var(--mist);
-  }
-  .action-btn.primary{
-    background:var(--ocean);
-    color:var(--white);
-    border-color:var(--ocean);
-  }
-  .action-btn.primary:hover{
-    background:var(--aqua);
-    border-color:var(--aqua);
-  }
-  .action-btn:focus-visible{outline:3px solid var(--ocean); outline-offset:2px;}
+  .field-error{color:#C4453C;font-size:12px;margin-top:5px;display:none;}
 
-  /* ---------- Result panel (gauge card) ---------- */
-  .result-card{
-    position:sticky;
-    top:24px;
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    text-align:center;
-    min-height:420px;
-    justify-content:flex-start;
-    transition:min-height .4s var(--ease);
-  }
-  .result-card.empty .placeholder{ display:flex; }
-  .result-card.empty .result-content{ display:none; }
-  .placeholder{
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    gap:14px;
-    color:var(--text-secondary);
-    animation:fadeSlideUp .6s var(--ease) both;
-    margin-top:80px;
-  }
-  .placeholder svg{ width:64px;height:64px; opacity:.5; stroke:var(--ocean); }
-  .placeholder p{ max-width:24ch; font-size:14px; line-height:1.5; }
+  .result-card{position:sticky;top:24px;display:flex;flex-direction:column;align-items:center;text-align:center;min-height:400px;}
+  .result-card.empty .placeholder{display:flex;}
+  .result-card.empty .result-content{display:none;}
+  .placeholder{display:flex;flex-direction:column;align-items:center;gap:14px;color:var(--text-secondary);margin-top:70px;}
+  .placeholder svg{width:60px;height:60px;stroke:var(--ocean);opacity:.5;}
+  .result-content{width:100%;}
 
-  .result-content{
-    width:100%;
-    animation:fadeSlideUp .7s var(--ease) both;
-  }
-  @keyframes fadeSlideUp{
-    0%{ opacity:0; transform:translateY(24px); }
-    100%{ opacity:1; transform:translateY(0); }
-  }
+  .gauge-wrap{position:relative;width:140px;height:184px;margin:0 auto 8px;}
+  .gauge-wrap svg{width:100%;height:100%;display:block;}
+  #waveRect{transition:y 1s var(--ease);}
+  .gauge-pct{position:absolute;left:0;right:0;top:46%;transform:translateY(-50%);font-family:'JetBrains Mono',monospace;font-weight:700;font-size:20px;color:var(--deep-sea);}
 
-  /* Result cards grid */
-  .result-grid{
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:14px;
-    margin-top:20px;
-    width:100%;
-  }
+  .result-liters{font-size:40px;font-weight:700;color:var(--deep-sea);}
+  .result-liters span.unit{font-size:18px;font-weight:600;color:var(--ocean);}
+  .result-sub{color:var(--text-secondary);font-size:13px;margin-top:2px;}
+
+  .equiv-row{display:flex;justify-content:center;gap:20px;margin:14px 0 4px;flex-wrap:wrap;}
+  .equiv .n{font-family:'JetBrains Mono',monospace;font-weight:700;font-size:18px;color:var(--ocean);}
+  .equiv .l{font-size:11px;color:var(--text-secondary);text-transform:uppercase;}
+
+  .result-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:18px;width:100%;}
+  .stat-card{background:var(--bg-body);border-radius:var(--radius-sm);padding:12px;border:1px solid var(--border-light);text-align:center;}
+  .stat-card .label{font-size:11px;text-transform:uppercase;color:var(--text-secondary);font-weight:600;}
+  .stat-card .value{font-family:'JetBrains Mono',monospace;font-weight:700;font-size:18px;color:var(--deep-sea);margin-top:2px;}
+
+  .badge{display:inline-block;padding:3px 12px;border-radius:999px;font-size:11.5px;font-weight:600;margin-top:4px;}
+  .badge-underweight{background:#FDEBD0;color:#A04000;}
+  .badge-normal{background:#D5F5E3;color:#1E8449;}
+  .badge-overweight{background:#FDEBD0;color:#D35400;}
+  .badge-obese{background:#FDEDEC;color:#B03A2E;}
+  .badge-verylow{background:#FDEDEC;color:#B03A2E;}
+  .badge-low{background:#FDEBD0;color:#D35400;}
+  .badge-normal-hyd{background:#D5F5E3;color:#1E8449;}
+  .badge-high{background:#D4E6F1;color:#1A5276;}
+  .badge-veryhigh{background:#D4E6F1;color:#1A5276;}
+
+  .section-block{width:100%;margin-top:14px;border-top:1px solid var(--border-light);padding-top:14px;text-align:left;}
+  .section-title{font-weight:600;font-size:14px;color:var(--deep-sea);margin-bottom:6px;display:flex;justify-content:space-between;align-items:center;}
+
+  .log-progress{width:100%;background:var(--bg-body);border-radius:999px;height:18px;border:1px solid var(--border-light);overflow:hidden;position:relative;margin:8px 0;}
+  .log-progress .fill{height:100%;background:linear-gradient(90deg,var(--ocean),var(--aqua));width:0%;transition:width .5s var(--ease);}
+  .log-progress .pct-label{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;}
+
+  .log-actions{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin:6px 0;}
+  .log-actions button{border:1px solid var(--border-light);background:var(--bg-body);color:var(--text-primary);padding:6px 13px;border-radius:999px;font-size:12.5px;font-weight:500;cursor:pointer;}
+  .log-actions button:hover{background:var(--ocean);color:#fff;border-color:var(--ocean);}
+  .log-actions input{width:70px;padding:4px 8px;border:1px solid var(--border-light);border-radius:999px;background:var(--bg-body);color:var(--text-primary);font-size:12.5px;}
+
+  .meta-row{display:flex;gap:14px;justify-content:center;font-size:12.5px;color:var(--text-secondary);margin-top:4px;flex-wrap:wrap;}
+  .history-days{display:none;gap:6px;justify-content:center;flex-wrap:wrap;margin-top:8px;font-size:13px;}
+  .history-days.show{display:flex;}
+
+  .quick-adjust{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;}
+  .adj-btn{border:1px solid var(--border-light);background:var(--bg-body);color:var(--text-secondary);padding:5px 12px;border-radius:999px;font-size:12px;font-weight:500;cursor:pointer;}
+  .adj-btn:hover{border-color:var(--ocean);color:var(--ocean);}
+  #adjustmentDisplay{font-size:12.5px;font-weight:600;color:var(--ocean);text-align:center;margin-top:6px;}
+
+  .schedule-grid{display:grid;grid-template-columns:1fr 1fr;gap:5px 16px;}
+  @media (max-width:520px){.schedule-grid{grid-template-columns:1fr;}}
+  .schedule-item{display:flex;justify-content:space-between;font-size:13px;padding:4px 0;border-bottom:1px solid var(--border-light);color:var(--text-secondary);}
+  .schedule-item .time{font-weight:600;color:var(--text-primary);}
+
+  .breakdown-row{display:flex;justify-content:space-between;font-size:13px;padding:4px 0;color:var(--text-secondary);}
+  .breakdown-row b{color:var(--text-primary);}
+  .breakdown-row.total{border-top:1px dashed var(--border-light);margin-top:5px;padding-top:9px;font-weight:700;color:var(--deep-sea);}
+
+  .tip{margin-top:14px;background:var(--mist);border-radius:var(--radius-sm);padding:12px 14px;font-size:12.5px;color:var(--deep-sea);line-height:1.5;text-align:left;}
+
+  .action-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px;}
+  .action-btn{flex:1;min-width:90px;border:1.5px solid var(--border-light);background:var(--bg-body);color:var(--text-primary);font-weight:600;font-size:12.5px;padding:10px 10px;border-radius:var(--radius-sm);cursor:pointer;}
+  .action-btn.primary{background:var(--ocean);color:#fff;border-color:var(--ocean);}
+
+  .toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(80px);background:var(--bg-card);color:var(--text-primary);padding:13px 26px;border-radius:var(--radius-sm);border:1px solid var(--border-light);box-shadow:var(--shadow-card);font-weight:500;font-size:14px;opacity:0;transition:all .4s var(--ease);z-index:999;pointer-events:none;}
+  .toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+  .toast.success{border-left:4px solid #2ECC71;}
+  .toast.error{border-left:4px solid #E74C3C;}
+  .toast.info{border-left:4px solid var(--ocean);}
+
+  .content-section{margin-top:56px;}
+  .content-section h2{font-size:24px;margin-bottom:16px;}
+  .formula-note{color:var(--text-secondary);font-size:13.5px;line-height:1.7;max-width:70ch;}
+  .faq-item{background:var(--bg-card);border-radius:var(--radius-md);border:1px solid var(--border-light);margin-bottom:10px;overflow:hidden;}
+  .faq-item summary{padding:16px 18px;font-weight:600;cursor:pointer;color:var(--deep-sea);}
+  .faq-item p{margin:0;padding:0 18px 16px;color:var(--text-secondary);font-size:14px;line-height:1.6;}
+
+  footer{text-align:center;padding:32px 24px 44px;color:var(--text-secondary);font-size:12.5px;}
+
+  @media (max-width:768px){.card{padding:24px 18px;}}
   @media (max-width:520px){
-    .result-grid{ grid-template-columns:1fr; }
+    .result-liters{font-size:32px;}
+    .action-row{flex-direction:column;}
+    .input-row{flex-direction:column;}
+    .unit-toggle{width:100%;}
+    .unit-toggle button{flex:1;padding:10px;}
   }
-  .result-grid .stat-card{
-    background:var(--bg-body);
-    border-radius:var(--radius-sm);
-    padding:14px 12px;
-    border:1px solid var(--border-light);
-    transition:all .3s var(--ease);
-    text-align:center;
-  }
-  .result-grid .stat-card:hover{
-    transform:translateY(-3px);
-    box-shadow:0 8px 20px -12px rgba(0,0,0,0.2);
-  }
-  .result-grid .stat-card .label{
-    font-size:11px;
-    text-transform:uppercase;
-    letter-spacing:.05em;
-    color:var(--text-secondary);
-    font-weight:600;
-  }
-  .result-grid .stat-card .value{
-    font-family:'JetBrains Mono',monospace;
-    font-weight:700;
-    font-size:20px;
-    color:var(--deep-sea);
-    margin-top:2px;
-  }
-  [data-theme="dark"] .result-grid .stat-card .value{ color:var(--deep-sea); }
-
-  /* Progress Bar for Logger */
-  .log-progress{
-    width:100%;
-    margin:12px 0 6px;
-    background:var(--bg-body);
-    border-radius:999px;
-    height:18px;
-    border:1px solid var(--border-light);
-    overflow:hidden;
-    position:relative;
-  }
-  .log-progress .fill{
-    height:100%;
-    background:linear-gradient(90deg,var(--ocean),var(--aqua));
-    width:0%;
-    transition:width .6s var(--ease);
-  }
-  .log-progress .label{
-    position:absolute;
-    inset:0;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    font-size:11px;
-    font-weight:600;
-    color:var(--text-primary);
-  }
-
-  .log-actions{
-    display:flex;
-    gap:8px;
-    flex-wrap:wrap;
-    justify-content:center;
-    margin:8px 0;
-  }
-  .log-actions button{
-    border:1px solid var(--border-light);
-    background:var(--bg-body);
-    color:var(--text-primary);
-    padding:6px 14px;
-    border-radius:999px;
-    font-size:13px;
-    font-weight:500;
-    cursor:pointer;
-    transition:all .2s var(--ease);
-  }
-  .log-actions button:hover{
-    background:var(--ocean);
-    color:var(--white);
-    border-color:var(--ocean);
-  }
-  .log-actions input{
-    width:70px;
-    padding:4px 8px;
-    border:1px solid var(--border-light);
-    border-radius:999px;
-    background:var(--bg-body);
-    color:var(--text-primary);
-    font-size:13px;
-  }
-
-  /* Quick Adjustments */
-  .quick-adjust{
-    display:flex;
-    flex-wrap:wrap;
-    gap:8px;
-    justify-content:center;
-    margin:8px 0 4px;
-  }
-  .quick-adjust .adj-btn{
-    border:1px solid var(--border-light);
-    background:var(--bg-body);
-    color:var(--text-secondary);
-    padding:4px 12px;
-    border-radius:999px;
-    font-size:12px;
-    font-weight:500;
-    cursor:pointer;
-    transition:all .2s var(--ease);
-  }
-  .quick-adjust .adj-btn:hover{
-    border-color:var(--ocean);
-    color:var(--ocean);
-    transform:scale(1.03);
-  }
-  .quick-adjust .adj-btn.active{
-    background:var(--ocean);
-    color:var(--white);
-    border-color:var(--ocean);
-  }
-
-  /* Gauge */
-  .gauge-wrap{ position:relative; width:150px; height:196px; margin:0 auto 10px; }
-  .gauge-wrap svg{ width:100%; height:100%; display:block; }
-  #waveClip rect{ transition:y 1.1s var(--ease); }
-  .gauge-pct{
-    position:absolute; left:0; right:0; top:46%;
-    transform:translateY(-50%);
-    font-family:'JetBrains Mono',monospace;
-    font-weight:700;
-    font-size:22px;
-    color:var(--deep-sea);
-    mix-blend-mode:normal;
-    transition:color var(--transition-speed) var(--ease);
-  }
-  [data-theme="dark"] .gauge-pct{ color:var(--deep-sea); }
-
-  .result-liters{
-    font-size:44px;
-    font-weight:700;
-    color:var(--deep-sea);
-    transition:color var(--transition-speed) var(--ease);
-  }
-  .result-liters span{ font-size:20px; font-weight:600; color:var(--ocean); }
-  .result-sub{ color:var(--text-secondary); font-size:13.5px; margin-top:4px; }
-
-  .equiv-row{
-    display:flex;
-    justify-content:center;
-    gap:22px;
-    margin:16px 0 4px;
-    flex-wrap:wrap;
-  }
-  .equiv{ text-align:center; }
-  .equiv .n{ font-family:'JetBrains Mono',monospace; font-weight:700; font-size:19px; color:var(--ocean); }
-  .equiv .l{ font-size:11.5px; color:var(--text-secondary); text-transform:uppercase; letter-spacing:.04em; }
-
-  .breakdown{
-    width:100%;
-    margin-top:16px;
-    text-align:left;
-    border-top:1px solid var(--border-light);
-    padding-top:14px;
-    transition:border-color var(--transition-speed) var(--ease);
-  }
-  .breakdown-row{
-    display:flex;
-    justify-content:space-between;
-    font-size:13.5px;
-    padding:4px 0;
-    color:var(--text-secondary);
-    transition:color var(--transition-speed) var(--ease);
-  }
-  .breakdown-row b{ color:var(--text-primary); font-weight:600; transition:color var(--transition-speed) var(--ease); }
-  .breakdown-row.total{
-    border-top:1px dashed var(--border-light);
-    margin-top:6px;
-    padding-top:10px;
-    font-weight:700;
-    color:var(--deep-sea);
-  }
-  .breakdown-row.total b{ color:var(--deep-sea); }
-
-  .tip{
-    margin-top:16px;
-    background:var(--mist);
-    border-radius:var(--radius-sm);
-    padding:12px 14px;
-    font-size:12.5px;
-    color:var(--deep-sea);
-    line-height:1.5;
-    text-align:left;
-    transition:background var(--transition-speed) var(--ease), color var(--transition-speed) var(--ease);
-  }
-
-  /* BMI & Status badges */
-  .badge{
-    display:inline-block;
-    padding:3px 12px;
-    border-radius:999px;
-    font-size:12px;
-    font-weight:600;
-  }
-  .badge-underweight{ background:#FDEBD0; color:#A04000; }
-  .badge-normal{ background:#D5F5E3; color:#1E8449; }
-  .badge-overweight{ background:#FDEBD0; color:#D35400; }
-  .badge-obese{ background:#FDEDEC; color:#B03A2E; }
-  .badge-verylow{ background:#FDEDEC; color:#B03A2E; }
-  .badge-low{ background:#FDEBD0; color:#D35400; }
-  .badge-normal-hyd{ background:#D5F5E3; color:#1E8449; }
-  .badge-high{ background:#D4E6F1; color:#1A5276; }
-  .badge-veryhigh{ background:#D4E6F1; color:#1A5276; }
-  [data-theme="dark"] .badge-underweight{ background:#3D2A1A; color:#F0B27A; }
-  [data-theme="dark"] .badge-normal{ background:#1A3D2A; color:#7DCEA0; }
-  [data-theme="dark"] .badge-overweight{ background:#3D2A1A; color:#F0B27A; }
-  [data-theme="dark"] .badge-obese{ background:#3D1A1A; color:#E6B0AA; }
-  [data-theme="dark"] .badge-verylow{ background:#3D1A1A; color:#E6B0AA; }
-  [data-theme="dark"] .badge-low{ background:#3D2A1A; color:#F0B27A; }
-  [data-theme="dark"] .badge-normal-hyd{ background:#1A3D2A; color:#7DCEA0; }
-  [data-theme="dark"] .badge-high{ background:#1A2A3D; color:#85C1E9; }
-  [data-theme="dark"] .badge-veryhigh{ background:#1A2A3D; color:#85C1E9; }
-
-  /* Schedule */
-  .schedule-grid{
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:6px 16px;
-    margin-top:8px;
-    width:100%;
-  }
-  @media (max-width:520px){
-    .schedule-grid{ grid-template-columns:1fr; }
-  }
-  .schedule-item{
-    display:flex;
-    justify-content:space-between;
-    font-size:13px;
-    padding:4px 0;
-    border-bottom:1px solid var(--border-light);
-    color:var(--text-secondary);
-    transition:border-color var(--transition-speed) var(--ease), color var(--transition-speed) var(--ease);
-  }
-  .schedule-item .time{ font-weight:600; color:var(--text-primary); }
-  .schedule-item .amount{ font-family:'JetBrains Mono',monospace; font-weight:500; }
-
-  /* ---------- FAQ / SEO content ---------- */
-  .content-section{ margin-top:64px; }
-  .content-section h2{
-    font-size:26px;
-    margin-bottom:18px;
-    color:var(--deep-sea);
-    transition:color var(--transition-speed) var(--ease);
-  }
-  [data-theme="dark"] .content-section h2{ color:var(--deep-sea); }
-  .faq-item{
-    background:var(--bg-card);
-    border-radius:var(--radius-md);
-    border:1px solid var(--faq-border);
-    margin-bottom:12px;
-    overflow:hidden;
-    transition:background var(--transition-speed) var(--ease), border-color var(--transition-speed) var(--ease);
-  }
-  .faq-item summary{
-    padding:18px 20px;
-    font-weight:600;
-    cursor:pointer;
-    list-style:none;
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    color:var(--deep-sea);
-    transition:color var(--transition-speed) var(--ease);
-  }
-  .faq-item summary::-webkit-details-marker{ display:none; }
-  .faq-item summary::after{
-    content:'+';
-    font-size:20px;
-    color:var(--ocean);
-    transition:transform .2s var(--ease);
-  }
-  .faq-item[open] summary::after{ transform:rotate(45deg); }
-  .faq-item p{
-    margin:0;
-    padding:0 20px 18px;
-    color:var(--text-secondary);
-    font-size:14.5px;
-    line-height:1.6;
-    transition:color var(--transition-speed) var(--ease);
-  }
-
-  .formula-note{
-    color:var(--text-secondary);
-    font-size:13.5px;
-    line-height:1.7;
-    max-width:70ch;
-    transition:color var(--transition-speed) var(--ease);
-  }
-
-  /* ---------- Toast notification ---------- */
-  .toast{
-    position:fixed;
-    bottom:24px;
-    left:50%;
-    transform:translateX(-50%) translateY(80px);
-    background:var(--bg-card);
-    color:var(--text-primary);
-    padding:14px 28px;
-    border-radius:var(--radius-sm);
-    border:1px solid var(--border-light);
-    box-shadow:var(--shadow-card);
-    font-weight:500;
-    font-size:14px;
-    opacity:0;
-    transition:all .4s var(--ease);
-    z-index:999;
-    pointer-events:none;
-    max-width:90vw;
-    text-align:center;
-  }
-  .toast.show{
-    opacity:1;
-    transform:translateX(-50%) translateY(0);
-    pointer-events:auto;
-  }
-  .toast.success{ border-left:4px solid #2ECC71; }
-  .toast.error{ border-left:4px solid #E74C3C; }
-  .toast.info{ border-left:4px solid var(--ocean); }
-
-  /* ---------- Footer ---------- */
-  footer{
-    text-align:center;
-    padding:36px 24px 48px;
-    color:var(--text-secondary);
-    font-size:12.5px;
-    transition:color var(--transition-speed) var(--ease);
-  }
-
-  /* ---------- Responsive ---------- */
-  @media (max-width:1024px){
-    .panels{ grid-template-columns:1.1fr 1fr; gap:20px; }
-  }
-  @media (max-width:860px){
-    .panels{ grid-template-columns:1fr; }
-    .result-card{ position:static; }
-  }
-  @media (max-width:768px){
-    .hero{ padding:48px 0 16px; }
-    .card{ padding:28px 20px; }
-    .result-grid{ grid-template-columns:1fr 1fr; }
-  }
-  @media (max-width:520px){
-    .hero h1{ font-size:28px; }
-    .hero p{ font-size:15px; }
-    .card{ padding:20px 16px; }
-    .result-grid{ grid-template-columns:1fr; }
-    .equiv-row{ gap:12px; }
-    .result-liters{ font-size:34px; }
-    .action-row{ flex-direction:column; }
-    .action-btn{ min-width:auto; }
-    .input-row{ flex-direction:column; }
-    .unit-toggle{ width:100%; }
-    .unit-toggle button{ flex:1; padding:10px; }
-    .schedule-grid{ grid-template-columns:1fr; }
-    .theme-toggle-wrap{ top:10px; right:10px; }
-    .theme-toggle{ width:40px; height:40px; font-size:18px; }
-  }
-  @media (max-width:375px){
-    .wrap{ padding:0 12px; }
-    .card{ padding:16px 12px; }
-    .result-liters{ font-size:28px; }
-    .gauge-wrap{ width:120px; height:157px; }
-  }
-  @media (max-width:320px){
-    .hero h1{ font-size:24px; }
-    .result-liters{ font-size:24px; }
-    .gauge-wrap{ width:100px; height:130px; }
-    .pill{ font-size:12px; padding:8px 12px; }
-  }
-
-  /* ---------- Accessibility ---------- */
-  :focus-visible{
-    outline:3px solid var(--ocean);
-    outline-offset:2px;
-  }
-  .sr-only{
-    position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);border:0;
-  }
-
-  /* ---------- Print ---------- */
-  @media print{
-    .theme-toggle-wrap,.action-row,.calc-btn,.geo-btn,.log-actions,.quick-adjust{ display:none !important; }
-    .hero{ background:var(--foam) !important; padding:20px 0 !important; }
-    .card{ box-shadow:none !important; border:1px solid #ddd !important; break-inside:avoid; }
-    .result-card{ position:static !important; }
-    body{ background:white !important; color:black !important; }
-    [data-theme="dark"]{ --bg-body:white !important; --bg-card:white !important; --text-primary:black !important; --text-secondary:#444 !important; --deep-sea:#073B4C !important; --border-light:#ddd !important; }
-  }
+  :focus-visible{outline:3px solid var(--ocean);outline-offset:2px;}
+  .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);border:0;}
 </style>
 </head>
 <body>
 
-<!-- Dark mode toggle -->
 <div class="theme-toggle-wrap">
   <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">
-    <span class="icon-sun" aria-hidden="true">☀️</span>
-    <span class="icon-moon" aria-hidden="true">🌙</span>
+    <span id="themeIcon">🌙</span>
   </button>
 </div>
 
-<!-- Toast -->
 <div class="toast" id="toast" role="alert" aria-live="polite"></div>
 
 <header class="hero">
-  <div class="ripple-field" aria-hidden="true">
-    <span class="ripple"></span><span class="ripple"></span><span class="ripple"></span>
-  </div>
-  <div class="wrap hero-inner">
+  <div class="wrap">
     <span class="eyebrow">💧 Free · No sign-up · Instant result</span>
     <h1>Water Intake Calculator</h1>
-    <p>Your personal <strong>water intake counter</strong> — answer six quick questions and get a daily water intake target in liters, glasses, and bottles, built from your weight, height, age, activity, weather, and health status.</p>
+    <p>Answer a few quick questions and get a daily water target in liters, glasses, and bottles — based on your weight, height, age, activity, weather, and health status.</p>
   </div>
 </header>
 
 <main class="wrap">
   <div class="panels">
 
-    <!-- FORM CARD -->
+    <!-- FORM -->
     <section class="card" aria-labelledby="form-heading">
-      <h2 id="form-heading" style="font-size:20px;margin-bottom:22px;">Your details</h2>
+      <h2 id="form-heading" style="font-size:19px;margin-bottom:20px;">Your details</h2>
       <form id="hydrationForm" novalidate>
 
         <div class="field">
-          <label for="ageInput">Age <span class="hint">years (affects water needs)</span></label>
-          <div class="input-row">
-            <input type="number" id="ageInput" inputmode="numeric" placeholder="e.g. 32" min="1" step="1" required aria-required="true">
-          </div>
-          <div class="field-error" id="ageError" style="color:#C4453C;font-size:12px;margin-top:4px;display:none;"></div>
+          <label for="ageInput">Age <span class="hint">years</span></label>
+          <input type="number" id="ageInput" inputmode="numeric" placeholder="e.g. 32" min="1" step="1" required>
+          <div class="field-error" id="ageError"></div>
         </div>
 
         <div class="field">
-          <label for="weightInput">Weight <span class="hint">required</span></label>
+          <label for="weightInput">Weight</label>
           <div class="input-row">
-            <input type="number" id="weightInput" inputmode="decimal" placeholder="e.g. 68" min="1" step="0.1" required aria-required="true">
+            <input type="number" id="weightInput" inputmode="decimal" placeholder="e.g. 68" min="1" step="0.1" required>
             <div class="unit-toggle" role="group" aria-label="Weight unit">
               <button type="button" data-unit="kg" class="active" aria-pressed="true">kg</button>
               <button type="button" data-unit="lbs" aria-pressed="false">lbs</button>
             </div>
           </div>
-          <div class="field-error" id="weightError" style="color:#C4453C;font-size:12px;margin-top:4px;display:none;"></div>
+          <div class="field-error" id="weightError"></div>
         </div>
 
         <div class="field">
-          <label for="heightInput">Height <span class="hint">used for body-frame adjustment</span></label>
+          <label for="heightInput">Height</label>
           <div class="input-row" id="cmRow">
-            <input type="number" id="heightInput" inputmode="decimal" placeholder="e.g. 170" min="1" step="0.1" required aria-required="true">
+            <input type="number" id="heightInput" inputmode="decimal" placeholder="e.g. 170" min="1" step="0.1" required>
             <div class="unit-toggle" role="group" aria-label="Height unit">
               <button type="button" data-hunit="cm" class="active" aria-pressed="true">cm</button>
               <button type="button" data-hunit="ftin" aria-pressed="false">ft/in</button>
@@ -977,7 +236,7 @@
             <input type="number" id="heightFt" inputmode="numeric" placeholder="ft" min="0" aria-label="feet">
             <input type="number" id="heightIn" inputmode="numeric" placeholder="in" min="0" max="11" aria-label="inches">
           </div>
-          <div class="field-error" id="heightError" style="color:#C4453C;font-size:12px;margin-top:4px;display:none;"></div>
+          <div class="field-error" id="heightError"></div>
         </div>
 
         <div class="field">
@@ -992,11 +251,9 @@
 
         <div class="field">
           <label for="locationSelect">Location <span class="hint">optional — auto-fills weather</span></label>
-          <div class="input-row">
-            <select id="locationSelect" aria-label="Select a city for weather">
-              <option value="">Select a city…</option>
-            </select>
-          </div>
+          <select id="locationSelect" aria-label="Select a city for weather">
+            <option value="">Select a city…</option>
+          </select>
           <button type="button" id="geoBtn" class="geo-btn">📍 Use my current location</button>
           <div id="weatherStatus" class="weather-status" aria-live="polite"></div>
         </div>
@@ -1012,7 +269,7 @@
 
         <div class="field">
           <label for="healthSelect">Health condition <span class="hint">optional</span></label>
-          <select id="healthSelect" aria-label="Health condition">
+          <select id="healthSelect">
             <option value="0">None</option>
             <option value="300">Pregnant</option>
             <option value="700">Breastfeeding</option>
@@ -1020,49 +277,38 @@
           </select>
         </div>
 
-        <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:8px;">
-          <button type="submit" class="calc-btn" style="flex:2;min-width:160px;">
-            Calculate Water Intake →
-          </button>
-          <button type="button" id="resetBtn" class="action-btn" style="flex:1;min-width:80px;border-color:var(--border-light);">
-            🔄 Reset
-          </button>
+        <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:6px;">
+          <button type="submit" class="calc-btn" style="flex:2;min-width:160px;">Calculate Water Intake →</button>
+          <button type="button" id="resetBtn" class="reset-btn" style="flex:1;min-width:80px;">🔄 Reset</button>
         </div>
       </form>
     </section>
 
-    <!-- RESULT CARD -->
+    <!-- RESULT -->
     <section class="card result-card empty" id="resultCard" aria-live="polite" aria-labelledby="result-heading">
       <h2 id="result-heading" class="sr-only">Your hydration results</h2>
       <div class="placeholder">
-        <svg viewBox="0 0 24 24" fill="none" stroke="var(--ocean)" stroke-width="1.5"><path d="M12 2C12 2 5 11.5 5 16a7 7 0 0014 0c0-4.5-7-14-7-14z"/></svg>
-        <p>Your personalized hydration target will appear here.</p>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2C12 2 5 11.5 5 16a7 7 0 0014 0c0-4.5-7-14-7-14z"/></svg>
+        <p style="max-width:24ch;font-size:14px;">Your personalized hydration target will appear here.</p>
       </div>
 
       <div class="result-content">
         <div class="gauge-wrap">
           <svg viewBox="0 0 150 196" aria-hidden="true">
             <defs>
-              <clipPath id="dropClip">
-                <path d="M75 6C75 6 14 84 14 130a61 61 0 00122 0C136 84 75 6 75 6z"/>
-              </clipPath>
+              <clipPath id="dropClip"><path d="M75 6C75 6 14 84 14 130a61 61 0 00122 0C136 84 75 6 75 6z"/></clipPath>
               <linearGradient id="waveGrad" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0%" stop-color="#00B4D8"/>
-                <stop offset="100%" stop-color="#0077B6"/>
+                <stop offset="0%" stop-color="#00B4D8"/><stop offset="100%" stop-color="#0077B6"/>
               </linearGradient>
             </defs>
-            <path d="M75 6C75 6 14 84 14 130a61 61 0 00122 0C136 84 75 6 75 6z" fill="var(--gauge-bg)" stroke="var(--gauge-stroke)" stroke-width="2"/>
-            <g clip-path="url(#dropClip)">
-              <g id="waveClip">
-                <rect id="waveRect" x="0" y="196" width="150" height="196" fill="url(#waveGrad)"/>
-              </g>
-            </g>
+            <path d="M75 6C75 6 14 84 14 130a61 61 0 00122 0C136 84 75 6 75 6z" fill="var(--mist)" stroke="var(--border-light)" stroke-width="2"/>
+            <g clip-path="url(#dropClip)"><rect id="waveRect" x="0" y="196" width="150" height="196" fill="url(#waveGrad)"/></g>
             <path d="M75 6C75 6 14 84 14 130a61 61 0 00122 0C136 84 75 6 75 6z" fill="none" stroke="var(--deep-sea)" stroke-opacity="0.08" stroke-width="2"/>
           </svg>
           <div class="gauge-pct" id="gaugePct">0%</div>
         </div>
 
-        <div class="result-liters"><span id="resultL">0</span><span> L / day</span></div>
+        <div class="result-liters"><span id="resultL">0</span><span class="unit"> L / day</span></div>
         <div class="result-sub" id="resultMl"></div>
 
         <div class="equiv-row">
@@ -1071,207 +317,140 @@
           <div class="equiv"><div class="n" id="eqCups">0</div><div class="l">cups</div></div>
         </div>
 
-        <!-- Result Grid: BMI + Hydration Status -->
-        <div class="result-grid" id="resultGrid">
-          <div class="stat-card" id="bmiCard">
+        <div class="result-grid">
+          <div class="stat-card">
             <div class="label">BMI</div>
             <div class="value" id="bmiValue">—</div>
-            <div id="bmiBadge" style="margin-top:4px;"></div>
+            <div id="bmiBadge"></div>
           </div>
-          <div class="stat-card" id="hydrationStatusCard">
+          <div class="stat-card">
             <div class="label">Hydration Status</div>
             <div class="value" id="hydrationStatusValue">—</div>
-            <div id="hydrationBadge" style="margin-top:4px;"></div>
+            <div id="hydrationBadge"></div>
           </div>
         </div>
 
-        <!-- Daily Logger & Progress -->
-        <div style="width:100%;margin-top:12px;border-top:1px solid var(--border-light);padding-top:12px;">
-          <div style="display:flex;justify-content:space-between;font-size:14px;font-weight:600;color:var(--deep-sea);">
-            <span>💧 Today's log</span>
-            <span id="logSummary">0 ml / 0 ml</span>
-          </div>
-          <div class="log-progress" id="logProgress">
-            <div class="fill" id="logFill" style="width:0%;"></div>
-            <div class="label" id="logPercent">0%</div>
-          </div>
+        <div class="section-block">
+          <div class="section-title"><span>💧 Today's log</span><span id="logSummary">0 ml / 0 ml</span></div>
+          <div class="log-progress"><div class="fill" id="logFill"></div><div class="pct-label" id="logPercent">0%</div></div>
           <div class="log-actions">
-            <button id="logGlassBtn" aria-label="Log 250 ml glass">+ 🥤 250 ml</button>
-            <button id="logBottleBtn" aria-label="Log 500 ml bottle">+ 🧴 500 ml</button>
-            <input type="number" id="logCustomInput" placeholder="ml" min="1" step="10" style="width:80px;">
-            <button id="logCustomBtn">Log</button>
-            <button id="logResetBtn" style="border-color:#C4453C;color:#C4453C;">↺ Reset</button>
+            <button type="button" id="logGlassBtn">+ 🥤 250 ml</button>
+            <button type="button" id="logBottleBtn">+ 🧴 500 ml</button>
+            <input type="number" id="logCustomInput" placeholder="ml" min="1" step="10">
+            <button type="button" id="logCustomBtn">Log</button>
+            <button type="button" id="logResetBtn" style="border-color:#C4453C;color:#C4453C;">↺ Reset</button>
           </div>
-          <div style="display:flex;gap:16px;justify-content:center;font-size:13px;color:var(--text-secondary);margin-top:2px;">
+          <div class="meta-row">
             <span id="streakDisplay">🔥 Streak: 0 days</span>
-            <span id="historyDisplay" style="cursor:pointer;" title="Last 7 days">📅 History</span>
+            <span id="historyToggle" style="cursor:pointer;text-decoration:underline;">📅 History</span>
           </div>
-          <div id="historyPopup" style="display:none;background:var(--bg-body);border-radius:8px;padding:10px;margin-top:6px;font-size:13px;border:1px solid var(--border-light);">
-            <div style="display:flex;gap:6px;justify-content:center;flex-wrap:wrap;" id="historyDays"></div>
-          </div>
+          <div class="history-days" id="historyDays"></div>
         </div>
 
-        <!-- Quick Adjustments -->
-        <div style="width:100%;margin-top:10px;">
-          <div style="font-size:12px;font-weight:600;color:var(--text-secondary);text-transform:uppercase;letter-spacing:.04em;">Quick Adjustments</div>
+        <div class="section-block">
+          <div class="section-title">Quick adjustments</div>
           <div class="quick-adjust">
-            <button class="adj-btn" data-add="500">🏋️ Workout</button>
-            <button class="adj-btn" data-add="750">☀️ Hot day</button>
-            <button class="adj-btn" data-add="500">🤒 Sick</button>
-            <button class="adj-btn" data-add="300">🍷 Alcohol</button>
-            <button class="adj-btn" data-add="-300" style="border-color:#C4453C;color:#C4453C;">✖️ Remove</button>
+            <button type="button" class="adj-btn" data-add="500">🏋️ Workout</button>
+            <button type="button" class="adj-btn" data-add="750">☀️ Hot day</button>
+            <button type="button" class="adj-btn" data-add="500">🤒 Sick</button>
+            <button type="button" class="adj-btn" data-add="300">🍷 Alcohol</button>
+            <button type="button" class="adj-btn" data-add="-300" style="border-color:#C4453C;color:#C4453C;">✖️ Remove 300ml</button>
           </div>
-          <div style="font-size:11px;color:var(--text-secondary);text-align:center;margin-top:2px;">Temporary adjustments added to today's target</div>
-          <div id="adjustmentDisplay" style="font-size:13px;font-weight:600;color:var(--ocean);text-align:center;"></div>
+          <div id="adjustmentDisplay"></div>
         </div>
 
-        <!-- Schedule -->
-        <div style="width:100%;margin-top:12px;text-align:left;">
-          <div style="font-weight:600;font-size:14px;color:var(--deep-sea);margin-bottom:4px;">💧 Suggested Schedule</div>
+        <div class="section-block">
+          <div class="section-title">💧 Suggested schedule</div>
           <div class="schedule-grid" id="scheduleGrid"></div>
         </div>
 
-        <div class="breakdown" id="breakdown"></div>
+        <div class="breakdown" id="breakdown" style="width:100%;margin-top:14px;text-align:left;border-top:1px solid var(--border-light);padding-top:12px;"></div>
 
         <div class="tip" id="tipBox"></div>
 
-        <!-- Action buttons -->
         <div class="action-row">
-          <button class="action-btn primary" id="copyBtn" aria-label="Copy results to clipboard">📋 Copy Result</button>
-          <button class="action-btn" id="shareBtn" aria-label="Share results">📤 Share</button>
-          <button class="action-btn" id="pdfBtn" aria-label="Download PDF">📄 PDF</button>
+          <button type="button" class="action-btn primary" id="copyBtn">📋 Copy</button>
+          <button type="button" class="action-btn" id="shareBtn">📤 Share</button>
         </div>
       </div>
     </section>
-
   </div>
 
-  <!-- SEO / EDUCATIONAL CONTENT -->
   <section class="content-section" aria-labelledby="formula-heading">
     <h2 id="formula-heading">How your daily water intake is calculated</h2>
     <p class="formula-note">
-      This water intake counter starts from a baseline that depends on your <strong>age</strong> (35 ml/kg for under 18, 33 ml/kg for 18–65, 30 ml/kg for over 65). Then it layers on adjustments for activity level (up to +1000 ml for intense exercise), weather (up to +750 ml in heat), and health status (pregnancy, breastfeeding, or fever all raise fluid needs). Height contributes a small body-surface-area correction using the Mosteller formula, since larger-framed bodies lose slightly more fluid through skin and breath at the same weight. The result is then converted into water intake per day figures you can actually use — liters, glasses, and bottles. This is a general wellness estimate, not medical advice — people managing kidney, heart, or liver conditions should follow fluid guidance from their doctor.
+      The calculator starts from a baseline of 35 ml/kg for under 18, 33 ml/kg for 18–65, and 30 ml/kg for over 65.
+      It then adds adjustments for activity level (up to +1000 ml), weather (up to +750 ml), and health status
+      (pregnancy, breastfeeding, or fever). Height contributes a small body-surface-area correction, since
+      larger-framed bodies lose slightly more fluid through skin and breath at the same weight. This is a general
+      wellness estimate, not medical advice — anyone managing a kidney, heart, or liver condition should follow
+      their doctor's fluid guidance.
     </p>
   </section>
 
   <section class="content-section" aria-labelledby="faq-heading">
     <h2 id="faq-heading">Frequently asked questions</h2>
-
-    <details class="faq-item">
-      <summary>How much water should I drink a day?</summary>
-      <p>Most adults need roughly 30–35 ml per kilogram of body weight daily, adjusted upward for activity, heat, pregnancy, breastfeeding, or illness. Use the calculator above for a number tailored to you.</p>
-    </details>
-    <details class="faq-item">
-      <summary>Does coffee or tea count toward water intake?</summary>
-      <p>Yes, in moderation. Caffeinated drinks still contribute fluid, though plain water remains the best default choice for daily hydration.</p>
-    </details>
-    <details class="faq-item">
-      <summary>Is this calculator a substitute for medical advice?</summary>
-      <p>No. It provides a general wellness estimate. Anyone with a kidney, heart, or liver condition should follow the fluid guidance given by their doctor instead.</p>
-    </details>
-    <details class="faq-item">
-      <summary>Why does the calculator ask for my height?</summary>
-      <p>Height is combined with weight to estimate body surface area, which has a small but real effect on fluid loss through skin and breathing. It's a minor adjustment compared to activity and weather.</p>
-    </details>
-    <details class="faq-item">
-      <summary>How many glasses of water is that per day?</summary>
-      <p>The calculator converts your target into glasses, bottles, and cups automatically, using a standard 250 ml glass. Most adults land between 8 and 12 glasses a day depending on weight, activity, and weather.</p>
-    </details>
+    <details class="faq-item"><summary>How much water should I drink a day?</summary><p>Most adults need roughly 30–35 ml per kilogram of body weight daily, adjusted upward for activity, heat, pregnancy, breastfeeding, or illness. Use the calculator above for a number tailored to you.</p></details>
+    <details class="faq-item"><summary>Does coffee or tea count toward water intake?</summary><p>Yes, in moderation. Caffeinated drinks still contribute fluid, though plain water remains the best default choice.</p></details>
+    <details class="faq-item"><summary>Is this a substitute for medical advice?</summary><p>No. It's a general wellness estimate. Anyone with a kidney, heart, or liver condition should follow their doctor's fluid guidance instead.</p></details>
+    <details class="faq-item"><summary>Why does it ask for my height?</summary><p>Height combines with weight to estimate body surface area, which has a small effect on fluid loss through skin and breathing — a minor adjustment next to activity and weather.</p></details>
   </section>
 </main>
 
-<footer>
-  Hydration Calculator — a general wellness tool, not a substitute for professional medical advice.
-</footer>
+<footer>Water Intake Calculator — a general wellness tool, not a substitute for professional medical advice.</footer>
 
 <script>
 (function(){
   'use strict';
 
-  // ========== CONSTANTS ==========
-  const GLASS_ML = 250;
-  const BOTTLE_ML = 500;
-  const CUP_ML = 237;
-  const MAX_ML = 6000;
-  const MIN_ML = 1200;
-  const BASE_PER_KG = 33;
-  const BSA_REF = 1.73;
-  const BSA_SCALE = 400;
-  const BSA_CLAMP = 250;
-  const THEME_KEY = 'water_intake_theme';
-  const FORM_KEY = 'water_intake_form';
-  const LOG_KEY = 'water_intake_log';
+  // ---------- constants ----------
+  const GLASS_ML = 250, BOTTLE_ML = 500, CUP_ML = 237;
+  const MAX_ML = 6000, MIN_ML = 1200;
+  const BSA_REF = 1.73, BSA_SCALE = 400, BSA_CLAMP = 250;
+  const THEME_KEY = 'water_theme_v2';
+  const FORM_KEY = 'water_form_v2';
+  const LOG_KEY = 'water_log_v2';
+  const HISTORY_KEY = 'water_history_v2';
 
-  // ========== DOM REFS ==========
-  const $ = (s, ctx=document) => ctx.querySelector(s);
-  const $$ = (s, ctx=document) => [...ctx.querySelectorAll(s)];
+  const $ = s => document.querySelector(s);
+  const $$ = s => Array.from(document.querySelectorAll(s));
 
-  const ageInput = $('#ageInput');
-  const weightInput = $('#weightInput');
-  const heightInput = $('#heightInput');
-  const heightFt = $('#heightFt');
-  const heightIn = $('#heightIn');
-  const cmRow = $('#cmRow');
-  const ftInRow = $('#ftInRow');
-  const healthSelect = $('#healthSelect');
-  const form = $('#hydrationForm');
-  const resultCard = $('#resultCard');
-  const resetBtn = $('#resetBtn');
-  const copyBtn = $('#copyBtn');
-  const shareBtn = $('#shareBtn');
-  const pdfBtn = $('#pdfBtn');
-  const themeToggle = $('#themeToggle');
-  const toast = $('#toast');
-  const locationSelect = $('#locationSelect');
-  const geoBtn = $('#geoBtn');
-  const weatherStatus = $('#weatherStatus');
-  const weightError = $('#weightError');
-  const heightError = $('#heightError');
-  const ageError = $('#ageError');
+  // ---------- element refs ----------
+  const els = {
+    age: $('#ageInput'), weight: $('#weightInput'), height: $('#heightInput'),
+    ft: $('#heightFt'), inch: $('#heightIn'), cmRow: $('#cmRow'), ftRow: $('#ftInRow'),
+    health: $('#healthSelect'), form: $('#hydrationForm'), resultCard: $('#resultCard'),
+    resetBtn: $('#resetBtn'), copyBtn: $('#copyBtn'), shareBtn: $('#shareBtn'),
+    themeToggle: $('#themeToggle'), themeIcon: $('#themeIcon'), toast: $('#toast'),
+    location: $('#locationSelect'), geoBtn: $('#geoBtn'), weatherStatus: $('#weatherStatus'),
+    ageErr: $('#ageError'), weightErr: $('#weightError'), heightErr: $('#heightError'),
+    resultL: $('#resultL'), resultMl: $('#resultMl'),
+    eqGlasses: $('#eqGlasses'), eqBottles: $('#eqBottles'), eqCups: $('#eqCups'),
+    gaugePct: $('#gaugePct'), waveRect: $('#waveRect'), breakdown: $('#breakdown'), tip: $('#tipBox'),
+    bmiValue: $('#bmiValue'), bmiBadge: $('#bmiBadge'),
+    hydValue: $('#hydrationStatusValue'), hydBadge: $('#hydrationBadge'),
+    schedule: $('#scheduleGrid'),
+    logFill: $('#logFill'), logPct: $('#logPercent'), logSummary: $('#logSummary'),
+    logGlass: $('#logGlassBtn'), logBottle: $('#logBottleBtn'), logCustomInput: $('#logCustomInput'),
+    logCustomBtn: $('#logCustomBtn'), logReset: $('#logResetBtn'),
+    streak: $('#streakDisplay'), historyToggle: $('#historyToggle'), historyDays: $('#historyDays'),
+    adjustmentDisplay: $('#adjustmentDisplay'),
+  };
 
-  const resultL = $('#resultL');
-  const resultMl = $('#resultMl');
-  const eqGlasses = $('#eqGlasses');
-  const eqBottles = $('#eqBottles');
-  const eqCups = $('#eqCups');
-  const gaugePct = $('#gaugePct');
-  const waveRect = $('#waveRect');
-  const breakdown = $('#breakdown');
-  const tipBox = $('#tipBox');
-  const bmiValue = $('#bmiValue');
-  const bmiBadge = $('#bmiBadge');
-  const hydrationStatusValue = $('#hydrationStatusValue');
-  const hydrationBadge = $('#hydrationBadge');
-  const scheduleGrid = $('#scheduleGrid');
-
-  const logFill = $('#logFill');
-  const logPercent = $('#logPercent');
-  const logSummary = $('#logSummary');
-  const logGlassBtn = $('#logGlassBtn');
-  const logBottleBtn = $('#logBottleBtn');
-  const logCustomInput = $('#logCustomInput');
-  const logCustomBtn = $('#logCustomBtn');
-  const logResetBtn = $('#logResetBtn');
-  const streakDisplay = $('#streakDisplay');
-  const historyDisplay = $('#historyDisplay');
-  const historyPopup = $('#historyPopup');
-  const historyDays = $('#historyDays');
-  const adjustmentDisplay = $('#adjustmentDisplay');
-  const adjBtns = $$('.adj-btn');
-
-  // ========== STATE ==========
+  // ---------- state ----------
   let weightUnit = 'kg';
   let heightUnit = 'cm';
   let activityVal = 0;
   let weatherVal = 250;
   let currentResult = null;
-  let todaysLog = { date: '', logged: 0 };
-  let streak = 0;
-  let history = [];
   let adjustment = 0;
-  let toastTimeout = null;
+  let todaysLog = { date: todayStr(), logged: 0 };
+  let history = {};   // { 'YYYY-MM-DD': true }
+  let toastTimer = null;
 
-  // ========== CITIES ==========
+  function todayStr(){ return new Date().toISOString().split('T')[0]; }
+
+  // ---------- cities ----------
   const CITIES = [
     ['New York, USA', 40.71, -74.01], ['Los Angeles, USA', 34.05, -118.24],
     ['Toronto, Canada', 43.65, -79.38], ['Mexico City, Mexico', 19.43, -99.13],
@@ -1282,597 +461,377 @@
     ['Stockholm, Sweden', 59.33, 18.07], ['Warsaw, Poland', 52.23, 21.01],
     ['Moscow, Russia', 55.76, 37.62], ['Istanbul, Turkey', 41.01, 28.98],
     ['Dubai, UAE', 25.20, 55.27], ['Riyadh, Saudi Arabia', 24.71, 46.68],
-    ['Tel Aviv, Israel', 32.08, 34.78], ['Tehran, Iran', 35.69, 51.39],
-    ['Cairo, Egypt', 30.04, 31.24], ['Lagos, Nigeria', 6.52, 3.38],
-    ['Nairobi, Kenya', -1.29, 36.82], ['Johannesburg, South Africa', -26.20, 28.05],
-    ['Mumbai, India', 19.08, 72.88], ['Delhi, India', 28.61, 77.21],
-    ['Bangalore, India', 12.97, 77.59], ['Karachi, Pakistan', 24.86, 67.00],
-    ['Dhaka, Bangladesh', 23.81, 90.41], ['Beijing, China', 39.90, 116.41],
-    ['Shanghai, China', 31.23, 121.47], ['Tokyo, Japan', 35.68, 139.65],
-    ['Seoul, South Korea', 37.57, 126.98], ['Singapore', 1.35, 103.82],
-    ['Bangkok, Thailand', 13.76, 100.50], ['Jakarta, Indonesia', -6.21, 106.85],
-    ['Manila, Philippines', 14.60, 120.98], ['Kuala Lumpur, Malaysia', 3.14, 101.69],
-    ['Sydney, Australia', -33.87, 151.21], ['Melbourne, Australia', -37.81, 144.96],
-  ].sort((a,b)=> a[0].localeCompare(b[0]));
+    ['Tel Aviv, Israel', 32.08, 34.78], ['Cairo, Egypt', 30.04, 31.24],
+    ['Lagos, Nigeria', 6.52, 3.38], ['Nairobi, Kenya', -1.29, 36.82],
+    ['Johannesburg, South Africa', -26.20, 28.05], ['Mumbai, India', 19.08, 72.88],
+    ['Delhi, India', 28.61, 77.21], ['Bangalore, India', 12.97, 77.59],
+    ['Karachi, Pakistan', 24.86, 67.00], ['Dhaka, Bangladesh', 23.81, 90.41],
+    ['Beijing, China', 39.90, 116.41], ['Shanghai, China', 31.23, 121.47],
+    ['Tokyo, Japan', 35.68, 139.65], ['Seoul, South Korea', 37.57, 126.98],
+    ['Singapore', 1.35, 103.82], ['Bangkok, Thailand', 13.76, 100.50],
+    ['Jakarta, Indonesia', -6.21, 106.85], ['Manila, Philippines', 14.60, 120.98],
+    ['Kuala Lumpur, Malaysia', 3.14, 101.69], ['Sydney, Australia', -33.87, 151.21],
+    ['Melbourne, Australia', -37.81, 144.96],
+  ].sort((a,b) => a[0].localeCompare(b[0]));
 
-  // ========== POPULATE CITY SELECT ==========
-  CITIES.forEach(([name, lat, lon])=>{
+  CITIES.forEach(([name, lat, lon]) => {
     const opt = document.createElement('option');
-    opt.value = `${lat},${lon}`;
+    opt.value = lat + ',' + lon;
     opt.textContent = name;
-    locationSelect.appendChild(opt);
+    els.location.appendChild(opt);
   });
 
-  // ========== UNIT TOGGLES ==========
-  $$('[data-unit]').forEach(btn=>{
-    btn.addEventListener('click', function(){
-      $$('[data-unit]').forEach(b=>{ b.classList.remove('active'); b.setAttribute('aria-pressed','false'); });
-      this.classList.add('active');
-      this.setAttribute('aria-pressed','true');
-      weightUnit = this.dataset.unit;
-      weightInput.placeholder = weightUnit === 'kg' ? 'e.g. 68' : 'e.g. 150';
-      saveFormState();
+  // ---------- toast ----------
+  function showToast(msg, type, duration){
+    type = type || 'info'; duration = duration || 2600;
+    if(toastTimer) clearTimeout(toastTimer);
+    els.toast.textContent = msg;
+    els.toast.className = 'toast ' + type;
+    void els.toast.offsetWidth;
+    els.toast.classList.add('show');
+    toastTimer = setTimeout(() => els.toast.classList.remove('show'), duration);
+  }
+
+  // ---------- unit toggles ----------
+  $$('[data-unit]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      $$('[data-unit]').forEach(b => { b.classList.remove('active'); b.setAttribute('aria-pressed','false'); });
+      btn.classList.add('active'); btn.setAttribute('aria-pressed','true');
+      weightUnit = btn.dataset.unit;
+      els.weight.placeholder = weightUnit === 'kg' ? 'e.g. 68' : 'e.g. 150';
+      saveForm();
     });
   });
 
-  $$('[data-hunit]').forEach(btn=>{
-    btn.addEventListener('click', function(){
-      $$('[data-hunit]').forEach(b=>{ b.classList.remove('active'); b.setAttribute('aria-pressed','false'); });
-      this.classList.add('active');
-      this.setAttribute('aria-pressed','true');
-      heightUnit = this.dataset.hunit;
-      if(heightUnit === 'cm'){
-        cmRow.style.display='flex';
-        ftInRow.classList.remove('show');
-        heightInput.required = true;
-        heightFt.required = false;
-        heightIn.required = false;
-      } else {
-        cmRow.style.display='none';
-        ftInRow.classList.add('show');
-        heightInput.required = false;
-        heightFt.required = true;
-        heightIn.required = true;
-      }
-      saveFormState();
+  $$('[data-hunit]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      $$('[data-hunit]').forEach(b => { b.classList.remove('active'); b.setAttribute('aria-pressed','false'); });
+      btn.classList.add('active'); btn.setAttribute('aria-pressed','true');
+      heightUnit = btn.dataset.hunit;
+      const isCm = heightUnit === 'cm';
+      els.cmRow.style.display = isCm ? 'flex' : 'none';
+      els.ftRow.classList.toggle('show', !isCm);
+      els.height.required = isCm; els.ft.required = !isCm; els.inch.required = !isCm;
+      saveForm();
     });
   });
 
-  // ========== PILL GROUPS ==========
-  function wirePillGroup(id, setter){
-    const group = document.getElementById(id);
-    if(!group) return;
-    group.querySelectorAll('.pill').forEach(btn=>{
-      btn.addEventListener('click', function(){
-        group.querySelectorAll('.pill').forEach(b=>{ b.classList.remove('active'); b.setAttribute('aria-pressed','false'); });
-        this.classList.add('active');
-        this.setAttribute('aria-pressed','true');
-        setter(Number(this.dataset.val));
-        saveFormState();
+  // ---------- pill groups (activity / weather) ----------
+  function wirePills(groupId, onChange){
+    const group = document.getElementById(groupId);
+    group.querySelectorAll('.pill').forEach(btn => {
+      btn.addEventListener('click', () => {
+        group.querySelectorAll('.pill').forEach(b => { b.classList.remove('active'); b.setAttribute('aria-pressed','false'); });
+        btn.classList.add('active'); btn.setAttribute('aria-pressed','true');
+        onChange(Number(btn.dataset.val));
+        saveForm();
       });
     });
   }
-  wirePillGroup('activityGroup', v => { activityVal = v; });
-  wirePillGroup('weatherGroup', v => { weatherVal = v; });
+  wirePills('activityGroup', v => activityVal = v);
+  wirePills('weatherGroup', v => weatherVal = v);
 
-  // ========== WEATHER API (FIXED) ==========
-  function applyTemperature(tempC, label){
-    let targetVal, pillIndex;
-    if(tempC < 15){ targetVal = 0; pillIndex = 0; }
-    else if(tempC <= 28){ targetVal = 250; pillIndex = 1; }
-    else { targetVal = 750; pillIndex = 2; }
-
-    const pills = document.querySelectorAll('#weatherGroup .pill');
-    pills.forEach((p,i)=>{
-      p.classList.toggle('active', i===pillIndex);
-      p.setAttribute('aria-pressed', i===pillIndex ? 'true' : 'false');
+  function setWeatherPillByIndex(idx){
+    const pills = $$('#weatherGroup .pill');
+    pills.forEach((p,i) => {
+      p.classList.toggle('active', i === idx);
+      p.setAttribute('aria-pressed', i === idx ? 'true' : 'false');
     });
-    weatherVal = targetVal;
-
-    weatherStatus.textContent = `${label}: ${Math.round(tempC)}°C detected — weather set automatically (you can still override above).`;
-    weatherStatus.className = 'weather-status ok';
-    saveFormState();
   }
 
+  // ---------- weather lookup ----------
   async function fetchTemperature(lat, lon, label){
-    weatherStatus.textContent = 'Checking current temperature…';
-    weatherStatus.className = 'weather-status';
+    els.weatherStatus.textContent = 'Checking current temperature…';
+    els.weatherStatus.className = 'weather-status';
     try{
-      // Using the stable current_weather endpoint
       const res = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current_weather=true`);
       if(!res.ok) throw new Error('bad response');
       const data = await res.json();
-      const tempC = data.current_weather && data.current_weather.temperature;
+      const tempC = data && data.current_weather && data.current_weather.temperature;
       if(typeof tempC !== 'number') throw new Error('no temp');
-      applyTemperature(tempC, label);
+      let idx, val;
+      if(tempC < 15){ idx = 0; val = 0; }
+      else if(tempC <= 28){ idx = 1; val = 250; }
+      else { idx = 2; val = 750; }
+      weatherVal = val;
+      setWeatherPillByIndex(idx);
+      els.weatherStatus.textContent = `${label}: ${Math.round(tempC)}°C — weather set automatically (you can still override above).`;
+      els.weatherStatus.className = 'weather-status ok';
+      saveForm();
     } catch(err){
-      weatherStatus.textContent = "Couldn't fetch live temperature — please select Weather manually.";
-      weatherStatus.className = 'weather-status err';
+      els.weatherStatus.textContent = "Couldn't fetch live temperature — please select Weather manually.";
+      els.weatherStatus.className = 'weather-status err';
     }
   }
 
-  locationSelect.addEventListener('change', function(){
-    if(!this.value) return;
-    const [lat, lon] = this.value.split(',').map(Number);
-    fetchTemperature(lat, lon, this.options[this.selectedIndex].text);
-    saveFormState();
+  els.location.addEventListener('change', () => {
+    if(!els.location.value) return;
+    const [lat, lon] = els.location.value.split(',').map(Number);
+    fetchTemperature(lat, lon, els.location.options[els.location.selectedIndex].text);
+    saveForm();
   });
 
-  geoBtn.addEventListener('click', function(){
+  els.geoBtn.addEventListener('click', () => {
     if(!navigator.geolocation){
-      weatherStatus.textContent = 'Location detection is not supported in this browser.';
-      weatherStatus.className = 'weather-status err';
+      els.weatherStatus.textContent = 'Location detection is not supported in this browser.';
+      els.weatherStatus.className = 'weather-status err';
       return;
     }
-    this.disabled = true;
-    weatherStatus.textContent = 'Detecting your location…';
-    weatherStatus.className = 'weather-status';
+    els.geoBtn.disabled = true;
+    els.weatherStatus.textContent = 'Detecting your location…';
+    els.weatherStatus.className = 'weather-status';
     navigator.geolocation.getCurrentPosition(
-      (pos)=>{
-        geoBtn.disabled = false;
-        locationSelect.value = '';
+      pos => {
+        els.geoBtn.disabled = false;
+        els.location.value = '';
         fetchTemperature(pos.coords.latitude, pos.coords.longitude, 'Your location');
-        saveFormState();
       },
-      ()=>{
-        geoBtn.disabled = false;
-        weatherStatus.textContent = 'Location permission denied — please select a city or Weather manually.';
-        weatherStatus.className = 'weather-status err';
+      () => {
+        els.geoBtn.disabled = false;
+        els.weatherStatus.textContent = 'Location permission denied — please select a city or Weather manually.';
+        els.weatherStatus.className = 'weather-status err';
       },
       { timeout: 8000 }
     );
   });
 
-  // ========== LOCAL STORAGE HELPERS ==========
-  function loadData(){
+  // ---------- persistence ----------
+  function saveForm(){
     try{
-      const raw = localStorage.getItem(LOG_KEY);
-      if(raw){
-        const data = JSON.parse(raw);
-        const today = new Date().toISOString().split('T')[0];
-        if(data.date === today){
-          todaysLog = data;
-        } else {
-          todaysLog = { date: today, logged: 0 };
-        }
-      } else {
-        const today = new Date().toISOString().split('T')[0];
-        todaysLog = { date: today, logged: 0 };
-      }
-      const histRaw = localStorage.getItem('water_history');
-      if(histRaw){
-        history = JSON.parse(histRaw);
-      } else {
-        history = [];
-      }
-      const streakRaw = localStorage.getItem('water_streak');
-      if(streakRaw){
-        streak = parseInt(streakRaw,10) || 0;
-      }
+      localStorage.setItem(FORM_KEY, JSON.stringify({
+        age: els.age.value, weight: els.weight.value, weightUnit,
+        height: els.height.value, heightUnit, ft: els.ft.value, inch: els.inch.value,
+        activityVal, weatherVal, health: els.health.value, location: els.location.value,
+      }));
     } catch(e){}
-    updateLogUI();
-    updateStreakUI();
-    updateHistoryUI();
+  }
+
+  function restoreForm(){
+    try{
+      const raw = localStorage.getItem(FORM_KEY);
+      if(!raw) return;
+      const s = JSON.parse(raw);
+      if(s.age) els.age.value = s.age;
+      if(s.weight) els.weight.value = s.weight;
+      if(s.weightUnit){
+        const btn = document.querySelector(`[data-unit="${s.weightUnit}"]`);
+        if(btn) btn.click();
+      }
+      if(s.height) els.height.value = s.height;
+      if(s.ft) els.ft.value = s.ft;
+      if(s.inch) els.inch.value = s.inch;
+      if(s.heightUnit){
+        const btn = document.querySelector(`[data-hunit="${s.heightUnit}"]`);
+        if(btn) btn.click();
+      }
+      if(typeof s.activityVal === 'number'){
+        const btn = document.querySelector(`#activityGroup [data-val="${s.activityVal}"]`);
+        if(btn) btn.click();
+      }
+      if(typeof s.weatherVal === 'number'){
+        const btn = document.querySelector(`#weatherGroup [data-val="${s.weatherVal}"]`);
+        if(btn) btn.click();
+      }
+      if(s.health) els.health.value = s.health;
+      if(s.location) els.location.value = s.location;
+    } catch(e){}
   }
 
   function saveLog(){
     try{
       localStorage.setItem(LOG_KEY, JSON.stringify(todaysLog));
-      localStorage.setItem('water_history', JSON.stringify(history));
-      localStorage.setItem('water_streak', String(streak));
+      localStorage.setItem(HISTORY_KEY, JSON.stringify(history));
     } catch(e){}
   }
 
-  function updateLogUI(){
-    const today = new Date().toISOString().split('T')[0];
-    if(todaysLog.date !== today){
-      todaysLog = { date: today, logged: 0 };
-      saveLog();
+  function loadLog(){
+    try{
+      const raw = localStorage.getItem(LOG_KEY);
+      const today = todayStr();
+      if(raw){
+        const d = JSON.parse(raw);
+        todaysLog = d.date === today ? d : { date: today, logged: 0 };
+      } else {
+        todaysLog = { date: today, logged: 0 };
+      }
+      const hraw = localStorage.getItem(HISTORY_KEY);
+      history = hraw ? JSON.parse(hraw) : {};
+    } catch(e){
+      todaysLog = { date: todayStr(), logged: 0 };
+      history = {};
     }
-    const target = currentResult ? currentResult.totalMl + adjustment : 0;
+  }
+
+  function currentTargetMl(){
+    return currentResult ? currentResult.totalMl + adjustment : 0;
+  }
+
+  function computeStreak(){
+    let count = 0;
+    let d = new Date();
+    // if today not completed yet, streak counts consecutive completed days ending yesterday or today
+    for(let i = 0; i < 3650; i++){
+      const key = d.toISOString().split('T')[0];
+      if(history[key]) { count++; d.setDate(d.getDate() - 1); }
+      else break;
+    }
+    return count;
+  }
+
+  function renderLog(){
+    const target = currentTargetMl();
     const logged = todaysLog.logged || 0;
     const pct = target > 0 ? Math.min(1, logged / target) : 0;
-    logFill.style.width = (pct*100)+'%';
-    logPercent.textContent = Math.round(pct*100)+'%';
-    logSummary.textContent = `${logged} ml / ${target} ml`;
+    els.logFill.style.width = (pct * 100) + '%';
+    els.logPct.textContent = Math.round(pct * 100) + '%';
+    els.logSummary.textContent = `${Math.round(logged)} ml / ${Math.round(target)} ml`;
+    els.streak.textContent = `🔥 Streak: ${computeStreak()} days`;
+    renderHistory();
   }
 
-  function updateStreakUI(){
-    streakDisplay.textContent = `🔥 Streak: ${streak} days`;
-  }
-
-  function updateHistoryUI(){
-    const today = new Date().toISOString().split('T')[0];
-    const days = [];
-    for(let i=6; i>=0; i--){
-      const d = new Date();
+  function renderHistory(){
+    const today = new Date();
+    const parts = [];
+    for(let i = 6; i >= 0; i--){
+      const d = new Date(today);
       d.setDate(d.getDate() - i);
-      const ds = d.toISOString().split('T')[0];
-      const found = history.find(h => h.date === ds);
-      const completed = found ? found.completed : false;
-      const isToday = ds === today;
-      days.push({ date: ds, completed, isToday });
+      const key = d.toISOString().split('T')[0];
+      const done = !!history[key];
+      const isToday = i === 0;
+      const emoji = isToday ? (done ? '✅' : '📌') : (done ? '✅' : '❌');
+      parts.push(`<span title="${key}" style="opacity:${done||isToday?1:0.5}">${emoji}</span>`);
     }
-    historyDays.innerHTML = days.map(d => {
-      const emoji = d.isToday ? '📌' : (d.completed ? '✅' : '❌');
-      const cls = d.completed ? '' : 'style="opacity:0.5;"';
-      return `<span ${cls} title="${d.date}">${emoji}</span>`;
-    }).join(' ');
+    els.historyDays.innerHTML = parts.join(' ');
   }
 
   function logWater(amount){
-    if(!currentResult){
-      showToast('Please calculate your target first.', 'error');
-      return;
-    }
-    const today = new Date().toISOString().split('T')[0];
-    if(todaysLog.date !== today){
-      todaysLog = { date: today, logged: 0 };
-    }
+    if(!currentResult){ showToast('Please calculate your target first.', 'error'); return; }
+    const today = todayStr();
+    if(todaysLog.date !== today) todaysLog = { date: today, logged: 0 };
     todaysLog.logged = (todaysLog.logged || 0) + amount;
-    saveLog();
-    updateLogUI();
-    const target = currentResult.totalMl + adjustment;
+    const target = currentTargetMl();
     if(target > 0 && todaysLog.logged >= target){
-      const existing = history.find(h => h.date === today);
-      if(existing){
-        existing.completed = true;
-      } else {
-        history.push({ date: today, completed: true });
+      if(!history[today]){
+        history[today] = true;
+        showToast('🎉 Goal reached! Keep it up!', 'success');
       }
-      let streakCount = 0;
-      const sorted = history.sort((a,b)=> new Date(a.date) - new Date(b.date));
-      for(let i=sorted.length-1; i>=0; i--){
-        if(sorted[i].completed){
-          streakCount++;
-        } else {
-          break;
-        }
-      }
-      streak = streakCount;
-      saveLog();
-      updateStreakUI();
-      updateHistoryUI();
-      showToast('🎉 Goal reached! Keep it up!', 'success', 2000);
     } else {
-      const existing = history.find(h => h.date === today);
-      if(existing && existing.completed){
-        const targetNow = currentResult.totalMl + adjustment;
-        if(todaysLog.logged < targetNow){
-          existing.completed = false;
-          saveLog();
-          updateHistoryUI();
-        }
-      }
+      if(history[today]) delete history[today];
     }
-    showToast(`Logged ${amount} ml 💧`, 'info', 1500);
+    saveLog();
+    renderLog();
+    if(!(target > 0 && todaysLog.logged >= target)) showToast(`Logged ${amount} ml 💧`, 'info', 1400);
   }
 
-  // ========== TOAST ==========
-  function showToast(message, type='info', duration=3000){
-    if(toastTimeout){ clearTimeout(toastTimeout); toastTimeout=null; }
-    toast.textContent = message;
-    toast.className = 'toast '+type;
-    void toast.offsetWidth;
-    toast.classList.add('show');
-    toastTimeout = setTimeout(()=>{
-      toast.classList.remove('show');
-      toastTimeout = null;
-    }, duration);
-  }
-
-  // ========== COPY ==========
-  function buildResultText(d){
-    const schedule = d.schedule || [];
-    const scheduleText = schedule.length ? schedule.map(s => `${s.time} - ${s.amount} ml`).join('\n') : 'Not available';
-    const adj = d.adjustment || 0;
-    const adjustedTotal = d.totalMl + adj;
-    return `Daily Water Intake
-─────────────────
-Water: ${(adjustedTotal/1000).toFixed(1)} L
-${Math.round(adjustedTotal)} ml
-${Math.round(adjustedTotal/GLASS_ML)} Glasses
-${Math.round(adjustedTotal/BOTTLE_ML)} Bottles
-${Math.round(adjustedTotal/CUP_ML)} Cups
-
-BMI: ${d.bmi.toFixed(1)} (${d.bmiCategory})
-Hydration Status: ${d.hydrationStatus}
-
-Suggested Schedule
-─────────────────
-${scheduleText}
-
-Generated using Water Intake Calculator`;
-  }
-
-  copyBtn.addEventListener('click', function(){
-    if(!currentResult){
-      showToast('Please calculate your water intake first.', 'error');
-      return;
-    }
-    const text = buildResultText({...currentResult, adjustment});
-    if(navigator.clipboard && navigator.clipboard.writeText){
-      navigator.clipboard.writeText(text).then(()=>{
-        showToast('✅ Results copied to clipboard!', 'success');
-      }).catch(()=>{
-        fallbackCopy(text);
-      });
-    } else {
-      fallbackCopy(text);
-    }
+  els.logGlass.addEventListener('click', () => logWater(GLASS_ML));
+  els.logBottle.addEventListener('click', () => logWater(BOTTLE_ML));
+  els.logCustomBtn.addEventListener('click', () => {
+    const v = parseFloat(els.logCustomInput.value);
+    if(v > 0){ logWater(v); els.logCustomInput.value = ''; }
+    else showToast('Enter a valid amount in ml.', 'error');
   });
-
-  function fallbackCopy(text){
-    const ta = document.createElement('textarea');
-    ta.value = text;
-    ta.style.position='fixed';ta.style.left='-9999px';ta.style.top='-9999px';
-    document.body.appendChild(ta);
-    ta.select();
-    try{
-      document.execCommand('copy');
-      showToast('✅ Results copied to clipboard!', 'success');
-    } catch(e){
-      showToast('Could not copy. Please copy manually.', 'error');
-    }
-    document.body.removeChild(ta);
-  }
-
-  // ========== SHARE ==========
-  shareBtn.addEventListener('click', function(){
-    if(!currentResult){
-      showToast('Please calculate your water intake first.', 'error');
-      return;
-    }
-    const text = buildResultText({...currentResult, adjustment});
-    if(navigator.share){
-      navigator.share({
-        title: 'My Daily Water Intake',
-        text: text,
-      }).catch(()=>{});
-    } else {
-      fallbackCopy(text);
-      showToast('📤 Copied because sharing isn\'t supported.', 'info');
-    }
+  els.logReset.addEventListener('click', () => {
+    const today = todayStr();
+    todaysLog = { date: today, logged: 0 };
+    delete history[today];
+    saveLog();
+    renderLog();
+    showToast("Today's log reset.", 'info', 1400);
   });
+  els.historyToggle.addEventListener('click', () => els.historyDays.classList.toggle('show'));
 
-  // ========== PDF ==========
-  pdfBtn.addEventListener('click', function(){
-    if(!currentResult){
-      showToast('Please calculate your water intake first.', 'error');
-      return;
-    }
-    if(typeof window.jspdf === 'undefined'){
-      showToast('PDF library loading… try again in a moment.', 'error');
-      return;
-    }
-    const d = currentResult;
-    const adjustedTotal = d.totalMl + (adjustment || 0);
-    const { jsPDF } = window.jspdf;
-    const doc = new jsPDF({ unit:'mm', format:'a4' });
-    const pageW = 210;
-    const margin = 20;
-    let y = margin;
-
-    function text(t, size=14, style='normal', align='left'){
-      doc.setFontSize(size);
-      doc.setFont('helvetica', style);
-      const x = align==='left' ? margin : align==='center' ? pageW/2 : pageW-margin;
-      doc.text(t, x, y, { align });
-      y += size * 0.6 + 2;
-    }
-
-    function hr(){
-      y += 2;
-      doc.setDrawColor(200);
-      doc.line(margin, y, pageW-margin, y);
-      y += 4;
-    }
-
-    doc.setFontSize(22);
-    doc.setFont('helvetica', 'bold');
-    doc.text('💧 Daily Water Intake Report', pageW/2, y, { align:'center' });
-    y += 10;
-
-    doc.setFontSize(11);
-    doc.setFont('helvetica', 'normal');
-    const dateStr = new Date().toLocaleDateString('en-US', { weekday:'long', year:'numeric', month:'long', day:'numeric' });
-    doc.text('Generated: '+dateStr, pageW/2, y, { align:'center' });
-    y += 8;
-    hr();
-
-    text('Water Intake', 16, 'bold');
-    text(`• ${(adjustedTotal/1000).toFixed(1)} L  (${Math.round(adjustedTotal)} ml)`, 12);
-    text(`• ${Math.round(adjustedTotal/GLASS_ML)} glasses  • ${Math.round(adjustedTotal/BOTTLE_ML)} bottles  • ${Math.round(adjustedTotal/CUP_ML)} cups`, 12);
-    y += 2;
-    hr();
-
-    text(`BMI: ${d.bmi.toFixed(1)} — ${d.bmiCategory}`, 12);
-    text(`Hydration Status: ${d.hydrationStatus}`, 12);
-    y += 2;
-    hr();
-
-    text('Suggested Drinking Schedule', 14, 'bold');
-    if(d.schedule && d.schedule.length){
-      d.schedule.forEach(s => {
-        text(`  ${s.time}  —  ${s.amount} ml`, 11);
-      });
-    } else {
-      text('  Not available', 11);
-    }
-    y += 2;
-    hr();
-
-    text('Today\'s Log', 14, 'bold');
-    const logged = todaysLog.logged || 0;
-    const target = adjustedTotal;
-    text(`  Logged: ${logged} ml  (${Math.round(Math.min(1, logged/target)*100)}% of target)`, 12);
-    y += 2;
-    hr();
-
-    doc.setFontSize(10);
-    doc.setFont('helvetica', 'italic');
-    doc.text('Generated using Water Intake Calculator', pageW/2, y, { align:'center' });
-    y += 6;
-    doc.setFontSize(9);
-    doc.setFont('helvetica', 'normal');
-    doc.setTextColor(150);
-    doc.text('This is a general wellness estimate, not medical advice.', pageW/2, 285, { align:'center' });
-
-    doc.save('Water_Intake_Report.pdf');
-    showToast('📄 PDF downloaded!', 'success');
-  });
-
-  // ========== RESET ==========
-  resetBtn.addEventListener('click', function(){
-    ageInput.value = '';
-    weightInput.value = '';
-    heightInput.value = '';
-    heightFt.value = '';
-    heightIn.value = '';
-    healthSelect.value = '0';
-    locationSelect.value = '';
-    adjustment = 0;
-    adjustmentDisplay.textContent = '';
-
-    $$('[data-unit]').forEach(b=>{ b.classList.remove('active'); b.setAttribute('aria-pressed','false'); });
-    const kgBtn = document.querySelector('[data-unit="kg"]');
-    if(kgBtn){ kgBtn.classList.add('active'); kgBtn.setAttribute('aria-pressed','true'); }
-    weightUnit = 'kg';
-    weightInput.placeholder = 'e.g. 68';
-
-    $$('[data-hunit]').forEach(b=>{ b.classList.remove('active'); b.setAttribute('aria-pressed','false'); });
-    const cmBtn = document.querySelector('[data-hunit="cm"]');
-    if(cmBtn){ cmBtn.classList.add('active'); cmBtn.setAttribute('aria-pressed','true'); }
-    heightUnit = 'cm';
-    cmRow.style.display='flex';
-    ftInRow.classList.remove('show');
-    heightInput.required = true;
-    heightFt.required = false;
-    heightIn.required = false;
-
-    ['activityGroup','weatherGroup'].forEach(gid=>{
-      const g = document.getElementById(gid);
-      if(!g) return;
-      const pills = g.querySelectorAll('.pill');
-      pills.forEach((p,i)=>{
-        const isActive = i===0;
-        p.classList.toggle('active', isActive);
-        p.setAttribute('aria-pressed', isActive ? 'true' : 'false');
-      });
+  // ---------- quick adjustments ----------
+  $$('.adj-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      if(!currentResult){ showToast('Please calculate your target first.', 'error'); return; }
+      const add = parseInt(btn.dataset.add, 10);
+      adjustment = Math.max(0, (adjustment || 0) + add);
+      els.adjustmentDisplay.textContent = adjustment > 0 ? `+${adjustment} ml adjustment applied` : '';
+      applyAdjustmentToDisplay();
+      renderLog();
+      showToast(`Adjustment ${add >= 0 ? '+' : ''}${add} ml applied`, 'info', 1300);
     });
-    activityVal = 0;
-    weatherVal = 250;
-
-    weatherStatus.textContent = '';
-    weatherStatus.className = 'weather-status';
-    geoBtn.disabled = false;
-
-    resultCard.classList.add('empty');
-    currentResult = null;
-
-    weightError.style.display='none';
-    heightError.style.display='none';
-    ageError.style.display='none';
-
-    localStorage.removeItem(FORM_KEY);
-    showToast('🔄 All fields reset', 'info', 2000);
   });
 
-  // ========== CALCULATE ==========
-  function fmt(n, d=1){ return Number(n).toFixed(d); }
+  function applyAdjustmentToDisplay(){
+    const total = currentResult.totalMl + adjustment;
+    els.resultL.textContent = (total / 1000).toFixed(1);
+    els.resultMl.textContent = Math.round(total) + ' ml recommended for today' + (adjustment ? ' (adjusted)' : '');
+    els.eqGlasses.textContent = Math.round(total / GLASS_ML);
+    els.eqBottles.textContent = Math.round(total / BOTTLE_ML);
+    els.eqCups.textContent = Math.round(total / CUP_ML);
+    const pct = Math.min(1, total / 3500);
+    els.gaugePct.textContent = Math.round(pct * 100) + '%';
+    els.waveRect.setAttribute('y', 196 - pct * 178);
+    els.schedule.innerHTML = buildSchedule(total).map(s =>
+      `<div class="schedule-item"><span class="time">${s.time}</span><span>${s.amount} ml</span></div>`
+    ).join('');
+  }
 
-  function getBMICategory(bmi){
+  // ---------- calculation helpers ----------
+  function bmiCategory(bmi){
     if(bmi < 18.5) return { label:'Underweight', cls:'badge-underweight' };
     if(bmi < 25) return { label:'Normal', cls:'badge-normal' };
     if(bmi < 30) return { label:'Overweight', cls:'badge-overweight' };
     return { label:'Obese', cls:'badge-obese' };
   }
 
-  function getHydrationStatus(pct){
-    if(pct < 0.4) return { label:'Very Low', cls:'badge-verylow', desc:'Well below target — drink up!' };
-    if(pct < 0.7) return { label:'Low', cls:'badge-low', desc:'Below target — increase intake.' };
-    if(pct < 1.0) return { label:'Normal', cls:'badge-normal-hyd', desc:'On track — keep it up!' };
-    if(pct < 1.3) return { label:'High', cls:'badge-high', desc:'Above target — doing great.' };
-    return { label:'Very High', cls:'badge-veryhigh', desc:'Well above target — listen to your body.' };
+  function hydrationStatus(pct){
+    if(pct < 0.4) return { label:'Very Low', cls:'badge-verylow' };
+    if(pct < 0.7) return { label:'Low', cls:'badge-low' };
+    if(pct < 1.0) return { label:'Normal', cls:'badge-normal-hyd' };
+    if(pct < 1.3) return { label:'High', cls:'badge-high' };
+    return { label:'Very High', cls:'badge-veryhigh' };
   }
 
-  function generateSchedule(totalMl){
-    const age = parseInt(ageInput.value,10);
-    let times;
-    if(age > 65){
-      times = ['8:00 AM','9:30 AM','11:00 AM','12:30 PM','2:00 PM','3:30 PM','5:00 PM','6:30 PM','8:00 PM','9:30 PM'];
-    } else {
-      times = ['8:00 AM','10:00 AM','12:00 PM','2:00 PM','4:00 PM','6:00 PM','8:00 PM','10:00 PM'];
-    }
+  function buildSchedule(totalMl){
+    const age = parseInt(els.age.value, 10) || 30;
+    const times = age > 65
+      ? ['8:00 AM','9:30 AM','11:00 AM','12:30 PM','2:00 PM','3:30 PM','5:00 PM','6:30 PM','8:00 PM','9:30 PM']
+      : ['8:00 AM','10:00 AM','12:00 PM','2:00 PM','4:00 PM','6:00 PM','8:00 PM','10:00 PM'];
     const count = times.length;
-    const amounts = [];
-    const base = Math.floor(totalMl / count);
-    let extra = totalMl - base * count;
-    for(let i=0; i<count; i++){
-      let amt = base + (i < extra ? 1 : 0);
-      amt = Math.round(amt / 50) * 50;
-      if(amt < 50) amt = 50;
-      amounts.push(amt);
-    }
-    let sum = amounts.reduce((a,b)=>a+b,0);
-    let diff = totalMl - sum;
-    if(diff !== 0){
-      amounts[amounts.length-1] += diff;
-      if(amounts[amounts.length-1] < 50) amounts[amounts.length-1] = 50;
-    }
-    return times.map((t,i) => ({ time:t, amount:amounts[i] }));
+    const base = Math.floor(totalMl / count / 50) * 50;
+    const amounts = new Array(count).fill(base);
+    let remainder = Math.round(totalMl - base * count);
+    let i = 0;
+    while(remainder >= 50){ amounts[i % count] += 50; remainder -= 50; i++; }
+    if(remainder > 0) amounts[amounts.length - 1] += remainder;
+    return times.map((t, idx) => ({ time: t, amount: Math.max(50, Math.round(amounts[idx])) }));
   }
 
-  form.addEventListener('submit', function(e){
+  // ---------- validation ----------
+  function setError(el, show, msg){
+    el.textContent = msg || '';
+    el.style.display = show ? 'block' : 'none';
+  }
+
+  // ---------- calculate ----------
+  els.form.addEventListener('submit', e => {
     e.preventDefault();
 
-    const age = parseInt(ageInput.value,10);
-    if(!age || age <= 0){
-      ageError.textContent = 'Please enter a valid age.';
-      ageError.style.display='block';
-      ageInput.focus();
-      return;
-    }
-    ageError.style.display='none';
+    const age = parseInt(els.age.value, 10);
+    if(!age || age <= 0){ setError(els.ageErr, true, 'Please enter a valid age.'); els.age.focus(); return; }
+    setError(els.ageErr, false);
 
-    let weightKg = parseFloat(weightInput.value);
-    if(!weightKg || weightKg <= 0) {
-      weightError.textContent = 'Please enter a valid weight.';
-      weightError.style.display='block';
-      weightInput.focus();
-      return;
-    }
-    weightError.style.display='none';
-    if(weightUnit === 'lbs') weightKg = weightKg * 0.453592;
+    let weightKg = parseFloat(els.weight.value);
+    if(!weightKg || weightKg <= 0){ setError(els.weightErr, true, 'Please enter a valid weight.'); els.weight.focus(); return; }
+    setError(els.weightErr, false);
+    if(weightUnit === 'lbs') weightKg *= 0.453592;
 
     let heightCm;
     if(heightUnit === 'cm'){
-      heightCm = parseFloat(heightInput.value);
-      if(!heightCm || heightCm <= 0) {
-        heightError.textContent = 'Please enter a valid height.';
-        heightError.style.display='block';
-        heightInput.focus();
-        return;
-      }
+      heightCm = parseFloat(els.height.value);
+      if(!heightCm || heightCm <= 0){ setError(els.heightErr, true, 'Please enter a valid height.'); els.height.focus(); return; }
     } else {
-      const ft = parseFloat(heightFt.value) || 0;
-      const inch = parseFloat(heightIn.value) || 0;
-      if(ft <= 0 && inch <= 0) {
-        heightError.textContent = 'Please enter your height in feet and inches.';
-        heightError.style.display='block';
-        heightFt.focus();
-        return;
-      }
-      heightCm = (ft*12 + inch) * 2.54;
+      const ft = parseFloat(els.ft.value) || 0;
+      const inch = parseFloat(els.inch.value) || 0;
+      if(ft <= 0 && inch <= 0){ setError(els.heightErr, true, 'Please enter your height in feet and inches.'); els.ft.focus(); return; }
+      heightCm = (ft * 12 + inch) * 2.54;
     }
-    heightError.style.display='none';
+    setError(els.heightErr, false);
 
-    let coeff;
-    if(age < 18) coeff = 35;
-    else if(age <= 65) coeff = 33;
-    else coeff = 30;
-
-    const healthVal = Number(healthSelect.value);
+    const coeff = age < 18 ? 35 : age <= 65 ? 33 : 30;
+    const healthVal = Number(els.health.value);
     const base = weightKg * coeff;
 
     const bsa = Math.sqrt((heightCm * weightKg) / 3600);
@@ -1884,319 +843,167 @@ Generated using Water Intake Calculator`;
 
     const heightM = heightCm / 100;
     const bmi = weightKg / (heightM * heightM);
-    const bmiInfo = getBMICategory(bmi);
+    const bmiInfo = bmiCategory(bmi);
+    const pct = Math.min(1, totalMl / 3500);
+    const hydInfo = hydrationStatus(totalMl / 3500);
 
-    const pct = totalMl / 3500;
-    const hydInfo = getHydrationStatus(pct);
-
-    const schedule = generateSchedule(totalMl);
-
-    const result = {
-      totalMl,
-      liters: totalMl / 1000,
-      glasses: Math.round(totalMl / GLASS_ML),
-      bottles: Math.round(totalMl / BOTTLE_ML),
-      cups: Math.round(totalMl / CUP_ML),
-      base,
-      activityVal,
-      weatherVal,
-      healthVal,
-      bsaAdjust,
-      bmi,
-      bmiCategory: bmiInfo.label,
-      bmiCls: bmiInfo.cls,
-      hydrationStatus: hydInfo.label,
-      hydrationCls: hydInfo.cls,
-      hydrationDesc: hydInfo.desc,
-      schedule,
-      pct: Math.min(1, pct),
-      ageCoeff: coeff,
+    currentResult = {
+      totalMl, base, activityVal, weatherVal, healthVal, bsaAdjust,
+      bmi, bmiCategory: bmiInfo.label, bmiCls: bmiInfo.cls,
+      hydrationStatus: hydInfo.label, hydrationCls: hydInfo.cls,
+      age,
     };
-
-    currentResult = result;
-    renderResult(result);
-    saveFormState();
     adjustment = 0;
-    adjustmentDisplay.textContent = '';
-    updateLogUI();
-    showToast('✅ Hydration target calculated!', 'success', 2000);
+    els.adjustmentDisplay.textContent = '';
+
+    renderResult(currentResult, pct);
+    saveForm();
+    renderLog();
+    showToast('✅ Hydration target calculated!', 'success', 1800);
   });
 
-  function renderResult(d){
-    resultCard.classList.remove('empty');
+  function renderResult(d, pct){
+    els.resultCard.classList.remove('empty');
 
-    const targetL = d.liters;
-    const duration = 800;
+    const targetL = d.totalMl / 1000;
     const startTime = performance.now();
-
-    function animateNumber(el, target, decimals=1, suffix=''){
-      const start = 0;
-      const step = (t) => {
-        const progress = Math.min(1, (t - startTime) / duration);
-        const eased = 1 - Math.pow(1 - progress, 3);
-        const val = start + (target - start) * eased;
-        el.textContent = val.toFixed(decimals) + suffix;
-        if(progress < 1) requestAnimationFrame(step);
-        else el.textContent = target.toFixed(decimals) + suffix;
-      };
-      requestAnimationFrame(step);
+    const duration = 700;
+    function animate(t){
+      const p = Math.min(1, (t - startTime) / duration);
+      const eased = 1 - Math.pow(1 - p, 3);
+      els.resultL.textContent = (targetL * eased).toFixed(1);
+      if(p < 1) requestAnimationFrame(animate);
+      else els.resultL.textContent = targetL.toFixed(1);
     }
+    requestAnimationFrame(animate);
 
-    animateNumber(resultL, targetL, 1, '');
-    resultMl.textContent = Math.round(d.totalMl) + ' ml recommended for today';
+    els.resultMl.textContent = Math.round(d.totalMl) + ' ml recommended for today';
+    els.eqGlasses.textContent = Math.round(d.totalMl / GLASS_ML);
+    els.eqBottles.textContent = Math.round(d.totalMl / BOTTLE_ML);
+    els.eqCups.textContent = Math.round(d.totalMl / CUP_ML);
 
-    eqGlasses.textContent = d.glasses;
-    eqBottles.textContent = d.bottles;
-    eqCups.textContent = d.cups;
-
-    const pct = Math.min(1, d.totalMl / 3500);
-    const rect = waveRect;
-    const fillY = 196 - (pct * 178);
-    requestAnimationFrame(()=>{
-      rect.setAttribute('y', fillY);
-    });
-    gaugePct.textContent = Math.round(pct*100) + '%';
+    els.gaugePct.textContent = Math.round(pct * 100) + '%';
+    requestAnimationFrame(() => els.waveRect.setAttribute('y', 196 - pct * 178));
 
     const rows = [
       ['Base (age/weight)', Math.round(d.base) + ' ml'],
-      ['Activity', (d.activityVal>=0?'+':'') + Math.round(d.activityVal) + ' ml'],
-      ['Weather', (d.weatherVal>=0?'+':'') + Math.round(d.weatherVal) + ' ml'],
-      ['Health condition', (d.healthVal>=0?'+':'') + Math.round(d.healthVal) + ' ml'],
-      ['Body-frame adjustment', (d.bsaAdjust>=0?'+':'') + Math.round(d.bsaAdjust) + ' ml'],
+      ['Activity', (d.activityVal >= 0 ? '+' : '') + Math.round(d.activityVal) + ' ml'],
+      ['Weather', (d.weatherVal >= 0 ? '+' : '') + Math.round(d.weatherVal) + ' ml'],
+      ['Health condition', (d.healthVal >= 0 ? '+' : '') + Math.round(d.healthVal) + ' ml'],
+      ['Body-frame adjustment', (d.bsaAdjust >= 0 ? '+' : '') + Math.round(d.bsaAdjust) + ' ml'],
     ];
-    breakdown.innerHTML = rows.map(r => `<div class="breakdown-row"><span>${r[0]}</span><b>${r[1]}</b></div>`).join('')
+    els.breakdown.innerHTML = rows.map(r => `<div class="breakdown-row"><span>${r[0]}</span><b>${r[1]}</b></div>`).join('')
       + `<div class="breakdown-row total"><span>Total</span><b>${Math.round(d.totalMl)} ml</b></div>`;
 
     let ageTip = '';
-    const age = parseInt(ageInput.value,10);
-    if(age > 65){
-      ageTip = '👴 As you\'re over 65, remember that thirst sensation diminishes — drink on a schedule, not just when thirsty. ';
-    } else if(age < 18){
-      ageTip = '🧒 Growing bodies need more water per kilogram — keep sipping throughout the day! ';
-    }
+    if(d.age > 65) ageTip = "👴 Thirst sensation diminishes with age — drink on a schedule, not just when thirsty. ";
+    else if(d.age < 18) ageTip = "🧒 Growing bodies need more water per kilogram — keep sipping throughout the day! ";
     const tips = [
-      "Spread intake across the day rather than drinking it all at once — your kidneys can only process about 800–1000 ml per hour.",
+      "Spread intake across the day — your kidneys can only process about 800–1000 ml per hour.",
       "Thirst is a lagging signal. If you're already thirsty, you're mildly behind on hydration.",
       "Pale yellow urine is a simple day-to-day hydration check.",
-      "Add a pinch of electrolytes on very hot or high-sweat days — plain water alone won't replace lost sodium."
+      "Add a pinch of electrolytes on very hot or high-sweat days — plain water alone won't replace lost sodium.",
     ];
-    tipBox.textContent = ageTip + '💡 ' + tips[Math.floor(Math.random()*tips.length)];
+    els.tip.textContent = ageTip + '💡 ' + tips[Math.floor(Math.random() * tips.length)];
 
-    bmiValue.textContent = d.bmi.toFixed(1);
-    bmiBadge.innerHTML = `<span class="badge ${d.bmiCls}">${d.bmiCategory}</span>`;
+    els.bmiValue.textContent = d.bmi.toFixed(1);
+    els.bmiBadge.innerHTML = `<span class="badge ${d.bmiCls}">${d.bmiCategory}</span>`;
+    els.hydValue.textContent = d.hydrationStatus;
+    els.hydBadge.innerHTML = `<span class="badge ${d.hydrationCls}">${d.hydrationStatus}</span>`;
 
-    hydrationStatusValue.textContent = d.hydrationStatus;
-    hydrationBadge.innerHTML = `<span class="badge ${d.hydrationCls}">${d.hydrationStatus}</span>`;
-
-    scheduleGrid.innerHTML = d.schedule.map(s =>
-      `<div class="schedule-item"><span class="time">${s.time}</span><span class="amount">${s.amount} ml</span></div>`
+    els.schedule.innerHTML = buildSchedule(d.totalMl).map(s =>
+      `<div class="schedule-item"><span class="time">${s.time}</span><span>${s.amount} ml</span></div>`
     ).join('');
 
-    resultCard.scrollIntoView({behavior:'smooth', block:'nearest'});
-    updateLogUI();
+    els.resultCard.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
   }
 
-  // ========== QUICK ADJUSTMENTS ==========
-  adjBtns.forEach(btn => {
-    btn.addEventListener('click', function(){
-      if(!currentResult){
-        showToast('Please calculate your target first.', 'error');
-        return;
-      }
-      const add = parseInt(this.dataset.add,10);
-      adjustment = (adjustment || 0) + add;
-      if(adjustment < 0) adjustment = 0;
-      adjustmentDisplay.textContent = adjustment > 0 ? `+${adjustment} ml adjustment applied` : '';
-      const adjustedTotal = currentResult.totalMl + adjustment;
-      const liters = adjustedTotal / 1000;
-      resultL.textContent = liters.toFixed(1);
-      resultMl.textContent = Math.round(adjustedTotal) + ' ml (adjusted)';
-      eqGlasses.textContent = Math.round(adjustedTotal / GLASS_ML);
-      eqBottles.textContent = Math.round(adjustedTotal / BOTTLE_ML);
-      eqCups.textContent = Math.round(adjustedTotal / CUP_ML);
-      const pct = Math.min(1, adjustedTotal / 3500);
-      const fillY = 196 - (pct * 178);
-      requestAnimationFrame(()=>{
-        waveRect.setAttribute('y', fillY);
-      });
-      gaugePct.textContent = Math.round(pct*100) + '%';
-      const newSchedule = generateSchedule(adjustedTotal);
-      scheduleGrid.innerHTML = newSchedule.map(s =>
-        `<div class="schedule-item"><span class="time">${s.time}</span><span class="amount">${s.amount} ml</span></div>`
-      ).join('');
-      updateLogUI();
-      showToast(`Adjustment ${add>=0?'+':''}${add} ml applied`, 'info', 1500);
-    });
+  // ---------- copy / share ----------
+  function resultText(){
+    const d = currentResult;
+    const total = d.totalMl + adjustment;
+    const sched = buildSchedule(total).map(s => `${s.time} - ${s.amount} ml`).join('\n');
+    return `Daily Water Intake
+-----------------
+${(total/1000).toFixed(1)} L (${Math.round(total)} ml)
+${Math.round(total/GLASS_ML)} glasses | ${Math.round(total/BOTTLE_ML)} bottles | ${Math.round(total/CUP_ML)} cups
+
+BMI: ${d.bmi.toFixed(1)} (${d.bmiCategory})
+Hydration status: ${d.hydrationStatus}
+
+Suggested schedule
+-----------------
+${sched}`;
+  }
+
+  function fallbackCopy(text){
+    const ta = document.createElement('textarea');
+    ta.value = text; ta.style.position = 'fixed'; ta.style.left = '-9999px';
+    document.body.appendChild(ta); ta.select();
+    try{ document.execCommand('copy'); showToast('✅ Copied to clipboard!', 'success'); }
+    catch(e){ showToast('Could not copy. Please copy manually.', 'error'); }
+    document.body.removeChild(ta);
+  }
+
+  els.copyBtn.addEventListener('click', () => {
+    if(!currentResult){ showToast('Calculate your water intake first.', 'error'); return; }
+    const text = resultText();
+    if(navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(text).then(() => showToast('✅ Copied to clipboard!', 'success')).catch(() => fallbackCopy(text));
+    } else fallbackCopy(text);
   });
 
-  // ========== LOGGER EVENT BINDING ==========
-  logGlassBtn.addEventListener('click', function(){ logWater(GLASS_ML); });
-  logBottleBtn.addEventListener('click', function(){ logWater(BOTTLE_ML); });
-  logCustomBtn.addEventListener('click', function(){
-    const val = parseFloat(logCustomInput.value);
-    if(val && val > 0){
-      logWater(val);
-      logCustomInput.value = '';
-    } else {
-      showToast('Enter a valid amount in ml.', 'error');
-    }
-  });
-  logResetBtn.addEventListener('click', function(){
-    const today = new Date().toISOString().split('T')[0];
-    todaysLog = { date: today, logged: 0 };
-    const idx = history.findIndex(h => h.date === today);
-    if(idx !== -1){
-      history.splice(idx, 1);
-    }
-    saveLog();
-    updateLogUI();
-    updateHistoryUI();
-    showToast('Today\'s log reset.', 'info', 1500);
-  });
-  historyDisplay.addEventListener('click', function(){
-    const isOpen = historyPopup.style.display === 'block';
-    historyPopup.style.display = isOpen ? 'none' : 'block';
+  els.shareBtn.addEventListener('click', () => {
+    if(!currentResult){ showToast('Calculate your water intake first.', 'error'); return; }
+    const text = resultText();
+    if(navigator.share) navigator.share({ title: 'My Daily Water Intake', text }).catch(() => {});
+    else { fallbackCopy(text); showToast("📤 Copied — sharing isn't supported here.", 'info'); }
   });
 
-  // ========== DARK MODE ==========
+  // ---------- reset ----------
+  els.resetBtn.addEventListener('click', () => {
+    els.form.reset();
+    document.querySelector('[data-unit="kg"]').click();
+    document.querySelector('[data-hunit="cm"]').click();
+    document.querySelector('#activityGroup [data-val="0"]').click();
+    document.querySelector('#weatherGroup [data-val="250"]').click();
+    els.location.value = '';
+    els.weatherStatus.textContent = '';
+    els.weatherStatus.className = 'weather-status';
+    els.geoBtn.disabled = false;
+    adjustment = 0;
+    els.adjustmentDisplay.textContent = '';
+    currentResult = null;
+    els.resultCard.classList.add('empty');
+    setError(els.ageErr, false); setError(els.weightErr, false); setError(els.heightErr, false);
+    localStorage.removeItem(FORM_KEY);
+    showToast('🔄 All fields reset', 'info', 1600);
+  });
+
+  // ---------- theme ----------
   function setTheme(theme){
-    const isDark = theme === 'dark';
-    document.documentElement.setAttribute('data-theme', isDark ? 'dark' : 'light');
-    localStorage.setItem(THEME_KEY, isDark ? 'dark' : 'light');
+    document.documentElement.setAttribute('data-theme', theme);
+    els.themeIcon.textContent = theme === 'dark' ? '☀️' : '🌙';
+    try{ localStorage.setItem(THEME_KEY, theme); } catch(e){}
   }
-
-  function getPreferredTheme(){
-    const stored = localStorage.getItem(THEME_KEY);
-    if(stored === 'dark' || stored === 'light') return stored;
-    return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-  }
-
-  themeToggle.addEventListener('click', function(){
-    const current = document.documentElement.getAttribute('data-theme');
-    setTheme(current === 'dark' ? 'light' : 'dark');
+  els.themeToggle.addEventListener('click', () => {
+    const cur = document.documentElement.getAttribute('data-theme');
+    setTheme(cur === 'dark' ? 'light' : 'dark');
   });
+  let preferred = 'light';
+  try{
+    preferred = localStorage.getItem(THEME_KEY) || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+  } catch(e){}
+  setTheme(preferred);
 
-  setTheme(getPreferredTheme());
+  // ---------- input auto-save ----------
+  [els.age, els.weight, els.height, els.ft, els.inch].forEach(el => el.addEventListener('input', saveForm));
+  [els.health, els.location].forEach(el => el.addEventListener('change', saveForm));
 
-  // ========== SAVE / RESTORE FORM STATE ==========
-  function saveFormState(){
-    try{
-      const state = {
-        age: ageInput.value,
-        weight: weightInput.value,
-        weightUnit,
-        height: heightInput.value,
-        heightUnit,
-        heightFt: heightFt.value,
-        heightIn: heightIn.value,
-        activity: activityVal,
-        weather: weatherVal,
-        health: healthSelect.value,
-        location: locationSelect.value,
-      };
-      localStorage.setItem(FORM_KEY, JSON.stringify(state));
-    } catch(e){}
-  }
-
-  function restoreFormState(){
-    try{
-      const raw = localStorage.getItem(FORM_KEY);
-      if(!raw) return;
-      const state = JSON.parse(raw);
-      if(state.age) ageInput.value = state.age;
-      if(state.weight) weightInput.value = state.weight;
-      if(state.weightUnit){
-        const btn = document.querySelector(`[data-unit="${state.weightUnit}"]`);
-        if(btn){
-          $$('[data-unit]').forEach(b=>{ b.classList.remove('active'); b.setAttribute('aria-pressed','false'); });
-          btn.classList.add('active'); btn.setAttribute('aria-pressed','true');
-          weightUnit = state.weightUnit;
-          weightInput.placeholder = weightUnit === 'kg' ? 'e.g. 68' : 'e.g. 150';
-        }
-      }
-      if(state.height) heightInput.value = state.height;
-      if(state.heightUnit){
-        const btn = document.querySelector(`[data-hunit="${state.heightUnit}"]`);
-        if(btn){
-          $$('[data-hunit]').forEach(b=>{ b.classList.remove('active'); b.setAttribute('aria-pressed','false'); });
-          btn.classList.add('active'); btn.setAttribute('aria-pressed','true');
-          heightUnit = state.heightUnit;
-          if(heightUnit === 'cm'){
-            cmRow.style.display='flex';
-            ftInRow.classList.remove('show');
-            heightInput.required = true;
-            heightFt.required = false;
-            heightIn.required = false;
-          } else {
-            cmRow.style.display='none';
-            ftInRow.classList.add('show');
-            heightInput.required = false;
-            heightFt.required = true;
-            heightIn.required = true;
-          }
-        }
-      }
-      if(state.heightFt) heightFt.value = state.heightFt;
-      if(state.heightIn) heightIn.value = state.heightIn;
-
-      if(state.activity !== undefined){
-        const g = document.getElementById('activityGroup');
-        if(g){
-          const pills = g.querySelectorAll('.pill');
-          pills.forEach(p=>{
-            const isActive = Number(p.dataset.val) === state.activity;
-            p.classList.toggle('active', isActive);
-            p.setAttribute('aria-pressed', isActive ? 'true' : 'false');
-          });
-          activityVal = state.activity;
-        }
-      }
-
-      if(state.weather !== undefined){
-        const g = document.getElementById('weatherGroup');
-        if(g){
-          const pills = g.querySelectorAll('.pill');
-          pills.forEach(p=>{
-            const isActive = Number(p.dataset.val) === state.weather;
-            p.classList.toggle('active', isActive);
-            p.setAttribute('aria-pressed', isActive ? 'true' : 'false');
-          });
-          weatherVal = state.weather;
-        }
-      }
-
-      if(state.health) healthSelect.value = state.health;
-      if(state.location) locationSelect.value = state.location;
-    } catch(e){}
-  }
-
-  restoreFormState();
-
-  ageInput.addEventListener('input', saveFormState);
-  weightInput.addEventListener('input', saveFormState);
-  heightInput.addEventListener('input', saveFormState);
-  heightFt.addEventListener('input', saveFormState);
-  heightIn.addEventListener('input', saveFormState);
-  healthSelect.addEventListener('change', saveFormState);
-  locationSelect.addEventListener('change', saveFormState);
-
-  // ========== INIT LOGGING ==========
-  loadData();
-
-  let resizeTimer;
-  window.addEventListener('resize', ()=>{
-    if(resizeTimer) cancelAnimationFrame(resizeTimer);
-    resizeTimer = requestAnimationFrame(()=>{});
-  }, { passive: true });
-
-  document.addEventListener('keydown', function(e){
-    if(e.key === 'Escape'){
-      if(toast.classList.contains('show')){
-        toast.classList.remove('show');
-        if(toastTimeout){ clearTimeout(toastTimeout); toastTimeout=null; }
-      }
-    }
-  });
+  // ---------- init ----------
+  restoreForm();
+  loadLog();
+  renderLog();
 
 })();
 </script>
