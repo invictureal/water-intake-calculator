@@ -4,26 +4,26 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Water Intake Calculator — Daily Water Intake & Glasses Counter</title>
-<meta name="description" content="Free water intake calculator and daily water intake counter. Enter your weight, height, activity level, weather and health status to get your personal target in liters, glasses, and bottles — instantly, no sign-up.">
+<meta name="description" content="Free water intake calculator and daily water intake counter. Enter your weight, height, age, activity level, weather and health status to get your personal target in liters, glasses, and bottles — instantly, no sign-up.">
 <meta name="keywords" content="water intake calculator, water intake counter, water intake per day, water drinking glasses, daily water intake, how much water should I drink">
 <meta name="author" content="Water Intake Calculator">
 <meta name="robots" content="index, follow, max-image-preview:large">
 <meta name="theme-color" content="#0077B6">
-<link rel="canonical" href="https://invictureal.github.io/water_intake_calculator/">
+<link rel="canonical" href="https://invictureal.github.io/water-intake-calculator/">
 
 <meta property="og:type" content="website">
-<meta property="og:url" content="https://invictureal.github.io/water_intake_calculator/">
+<meta property="og:url" content="https://invictureal.github.io/water-intake-calculator/">
 <meta property="og:site_name" content="Water Intake Calculator">
 <meta property="og:title" content="Water Intake Calculator — Daily Water Intake & Glasses Counter">
-<meta property="og:description" content="Get your personal daily water intake target in seconds — in liters, glasses, and bottles. Based on weight, height, activity, weather and health condition.">
-<meta property="og:image" content="https://invictureal.github.io/water_intake_calculator/og-image.png">
+<meta property="og:description" content="Get your personal daily water intake target in seconds — in liters, glasses, and bottles. Based on weight, height, age, activity, weather and health condition.">
+<meta property="og:image" content="https://invictureal.github.io/water-intake-calculator/og-image.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta property="og:locale" content="en_US">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Water Intake Calculator">
 <meta name="twitter:description" content="Your personal daily water intake target in seconds — liters, glasses, and bottles.">
-<meta name="twitter:image" content="https://invictureal.github.io/water_intake_calculator/og-image.png">
+<meta name="twitter:image" content="https://invictureal.github.io/water-intake-calculator/og-image.png">
 
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%92%A7%3C/text%3E%3C/svg%3E">
 <link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%3C/text%3E%3C/svg%3E">
@@ -41,11 +41,11 @@
   "@type": "WebApplication",
   "name": "Water Intake Calculator",
   "alternateName": "Water Intake Counter",
-  "url": "https://invictureal.github.io/water_intake_calculator/",
+  "url": "https://invictureal.github.io/water-intake-calculator/",
   "applicationCategory": "HealthApplication",
   "operatingSystem": "Any",
   "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
-  "description": "Personalized water intake calculator and daily water intake counter based on weight, height, activity level, weather and health condition.",
+  "description": "Personalized water intake calculator and daily water intake counter based on weight, height, age, activity level, weather and health condition.",
   "keywords": "water intake calculator, water intake counter, water intake per day, water drinking glasses"
 }
 </script>
@@ -478,7 +478,7 @@
     align-items:center;
     text-align:center;
     min-height:420px;
-    justify-content:center;
+    justify-content:flex-start;
     transition:min-height .4s var(--ease);
   }
   .result-card.empty .placeholder{ display:flex; }
@@ -490,6 +490,7 @@
     gap:14px;
     color:var(--text-secondary);
     animation:fadeSlideUp .6s var(--ease) both;
+    margin-top:80px;
   }
   .placeholder svg{ width:64px;height:64px; opacity:.5; stroke:var(--ocean); }
   .placeholder p{ max-width:24ch; font-size:14px; line-height:1.5; }
@@ -541,6 +542,97 @@
     margin-top:2px;
   }
   [data-theme="dark"] .result-grid .stat-card .value{ color:var(--deep-sea); }
+
+  /* Progress Bar for Logger */
+  .log-progress{
+    width:100%;
+    margin:12px 0 6px;
+    background:var(--bg-body);
+    border-radius:999px;
+    height:18px;
+    border:1px solid var(--border-light);
+    overflow:hidden;
+    position:relative;
+  }
+  .log-progress .fill{
+    height:100%;
+    background:linear-gradient(90deg,var(--ocean),var(--aqua));
+    width:0%;
+    transition:width .6s var(--ease);
+  }
+  .log-progress .label{
+    position:absolute;
+    inset:0;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:11px;
+    font-weight:600;
+    color:var(--text-primary);
+  }
+
+  .log-actions{
+    display:flex;
+    gap:8px;
+    flex-wrap:wrap;
+    justify-content:center;
+    margin:8px 0;
+  }
+  .log-actions button{
+    border:1px solid var(--border-light);
+    background:var(--bg-body);
+    color:var(--text-primary);
+    padding:6px 14px;
+    border-radius:999px;
+    font-size:13px;
+    font-weight:500;
+    cursor:pointer;
+    transition:all .2s var(--ease);
+  }
+  .log-actions button:hover{
+    background:var(--ocean);
+    color:var(--white);
+    border-color:var(--ocean);
+  }
+  .log-actions input{
+    width:70px;
+    padding:4px 8px;
+    border:1px solid var(--border-light);
+    border-radius:999px;
+    background:var(--bg-body);
+    color:var(--text-primary);
+    font-size:13px;
+  }
+
+  /* Quick Adjustments */
+  .quick-adjust{
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+    justify-content:center;
+    margin:8px 0 4px;
+  }
+  .quick-adjust .adj-btn{
+    border:1px solid var(--border-light);
+    background:var(--bg-body);
+    color:var(--text-secondary);
+    padding:4px 12px;
+    border-radius:999px;
+    font-size:12px;
+    font-weight:500;
+    cursor:pointer;
+    transition:all .2s var(--ease);
+  }
+  .quick-adjust .adj-btn:hover{
+    border-color:var(--ocean);
+    color:var(--ocean);
+    transform:scale(1.03);
+  }
+  .quick-adjust .adj-btn.active{
+    background:var(--ocean);
+    color:var(--white);
+    border-color:var(--ocean);
+  }
 
   /* Gauge */
   .gauge-wrap{ position:relative; width:150px; height:196px; margin:0 auto 10px; }
@@ -811,7 +903,7 @@
 
   /* ---------- Print ---------- */
   @media print{
-    .theme-toggle-wrap,.action-row,.calc-btn,.geo-btn{ display:none !important; }
+    .theme-toggle-wrap,.action-row,.calc-btn,.geo-btn,.log-actions,.quick-adjust{ display:none !important; }
     .hero{ background:var(--foam) !important; padding:20px 0 !important; }
     .card{ box-shadow:none !important; border:1px solid #ddd !important; break-inside:avoid; }
     .result-card{ position:static !important; }
@@ -840,7 +932,7 @@
   <div class="wrap hero-inner">
     <span class="eyebrow">💧 Free · No sign-up · Instant result</span>
     <h1>Water Intake Calculator</h1>
-    <p>Your personal <strong>water intake counter</strong> — answer five quick questions and get a daily water intake target in liters, glasses, and bottles, built from your weight, height, activity, weather, and health status.</p>
+    <p>Your personal <strong>water intake counter</strong> — answer six quick questions and get a daily water intake target in liters, glasses, and bottles, built from your weight, height, age, activity, weather, and health status.</p>
   </div>
 </header>
 
@@ -851,6 +943,14 @@
     <section class="card" aria-labelledby="form-heading">
       <h2 id="form-heading" style="font-size:20px;margin-bottom:22px;">Your details</h2>
       <form id="hydrationForm" novalidate>
+
+        <div class="field">
+          <label for="ageInput">Age <span class="hint">years (affects water needs)</span></label>
+          <div class="input-row">
+            <input type="number" id="ageInput" inputmode="numeric" placeholder="e.g. 32" min="1" step="1" required aria-required="true">
+          </div>
+          <div class="field-error" id="ageError" style="color:#C4453C;font-size:12px;margin-top:4px;display:none;"></div>
+        </div>
 
         <div class="field">
           <label for="weightInput">Weight <span class="hint">required</span></label>
@@ -985,6 +1085,46 @@
           </div>
         </div>
 
+        <!-- Daily Logger & Progress -->
+        <div style="width:100%;margin-top:12px;border-top:1px solid var(--border-light);padding-top:12px;">
+          <div style="display:flex;justify-content:space-between;font-size:14px;font-weight:600;color:var(--deep-sea);">
+            <span>💧 Today's log</span>
+            <span id="logSummary">0 ml / 0 ml</span>
+          </div>
+          <div class="log-progress" id="logProgress">
+            <div class="fill" id="logFill" style="width:0%;"></div>
+            <div class="label" id="logPercent">0%</div>
+          </div>
+          <div class="log-actions">
+            <button id="logGlassBtn" aria-label="Log 250 ml glass">+ 🥤 250 ml</button>
+            <button id="logBottleBtn" aria-label="Log 500 ml bottle">+ 🧴 500 ml</button>
+            <input type="number" id="logCustomInput" placeholder="ml" min="1" step="10" style="width:80px;">
+            <button id="logCustomBtn">Log</button>
+            <button id="logResetBtn" style="border-color:#C4453C;color:#C4453C;">↺ Reset</button>
+          </div>
+          <div style="display:flex;gap:16px;justify-content:center;font-size:13px;color:var(--text-secondary);margin-top:2px;">
+            <span id="streakDisplay">🔥 Streak: 0 days</span>
+            <span id="historyDisplay" style="cursor:pointer;" title="Last 7 days">📅 History</span>
+          </div>
+          <div id="historyPopup" style="display:none;background:var(--bg-body);border-radius:8px;padding:10px;margin-top:6px;font-size:13px;border:1px solid var(--border-light);">
+            <div style="display:flex;gap:6px;justify-content:center;flex-wrap:wrap;" id="historyDays"></div>
+          </div>
+        </div>
+
+        <!-- Quick Adjustments -->
+        <div style="width:100%;margin-top:10px;">
+          <div style="font-size:12px;font-weight:600;color:var(--text-secondary);text-transform:uppercase;letter-spacing:.04em;">Quick Adjustments</div>
+          <div class="quick-adjust">
+            <button class="adj-btn" data-add="500">🏋️ Workout</button>
+            <button class="adj-btn" data-add="750">☀️ Hot day</button>
+            <button class="adj-btn" data-add="500">🤒 Sick</button>
+            <button class="adj-btn" data-add="300">🍷 Alcohol</button>
+            <button class="adj-btn" data-add="-300" style="border-color:#C4453C;color:#C4453C;">✖️ Remove</button>
+          </div>
+          <div style="font-size:11px;color:var(--text-secondary);text-align:center;margin-top:2px;">Temporary adjustments added to today's target</div>
+          <div id="adjustmentDisplay" style="font-size:13px;font-weight:600;color:var(--ocean);text-align:center;"></div>
+        </div>
+
         <!-- Schedule -->
         <div style="width:100%;margin-top:12px;text-align:left;">
           <div style="font-weight:600;font-size:14px;color:var(--deep-sea);margin-bottom:4px;">💧 Suggested Schedule</div>
@@ -1010,13 +1150,7 @@
   <section class="content-section" aria-labelledby="formula-heading">
     <h2 id="formula-heading">How your daily water intake is calculated</h2>
     <p class="formula-note">
-      This water intake counter starts from a baseline of about 33 ml per kilogram of body weight, then layers on
-      adjustments for activity level (up to +1000 ml for intense exercise), weather (up to +750 ml in heat), and
-      health status (pregnancy, breastfeeding, or fever all raise fluid needs). Height contributes a small
-      body-surface-area correction using the Mosteller formula, since larger-framed bodies lose slightly more fluid
-      through skin and breath at the same weight. The result is then converted into water intake per day figures you
-      can actually use — liters, glasses, and bottles. This is a general wellness estimate, not medical advice —
-      people managing kidney, heart, or liver conditions should follow fluid guidance from their doctor.
+      This water intake counter starts from a baseline that depends on your <strong>age</strong> (35 ml/kg for under 18, 33 ml/kg for 18–65, 30 ml/kg for over 65). Then it layers on adjustments for activity level (up to +1000 ml for intense exercise), weather (up to +750 ml in heat), and health status (pregnancy, breastfeeding, or fever all raise fluid needs). Height contributes a small body-surface-area correction using the Mosteller formula, since larger-framed bodies lose slightly more fluid through skin and breath at the same weight. The result is then converted into water intake per day figures you can actually use — liters, glasses, and bottles. This is a general wellness estimate, not medical advice — people managing kidney, heart, or liver conditions should follow fluid guidance from their doctor.
     </p>
   </section>
 
@@ -1060,15 +1194,20 @@
   const CUP_ML = 237;
   const MAX_ML = 6000;
   const MIN_ML = 1200;
-  const BASE_PER_KG = 33;
+  const BASE_PER_KG = 33; // default, will be overridden by age
   const BSA_REF = 1.73;
   const BSA_SCALE = 400;
   const BSA_CLAMP = 250;
+  const STORAGE_KEY = 'water_intake_data';
+  const THEME_KEY = 'water_intake_theme';
+  const FORM_KEY = 'water_intake_form';
+  const LOG_KEY = 'water_intake_log';
 
   // ========== DOM REFS ==========
   const $ = (s, ctx=document) => ctx.querySelector(s);
   const $$ = (s, ctx=document) => [...ctx.querySelectorAll(s)];
 
+  const ageInput = $('#ageInput');
   const weightInput = $('#weightInput');
   const heightInput = $('#heightInput');
   const heightFt = $('#heightFt');
@@ -1089,6 +1228,7 @@
   const weatherStatus = $('#weatherStatus');
   const weightError = $('#weightError');
   const heightError = $('#heightError');
+  const ageError = $('#ageError');
 
   // Result elements
   const resultL = $('#resultL');
@@ -1106,177 +1246,211 @@
   const hydrationBadge = $('#hydrationBadge');
   const scheduleGrid = $('#scheduleGrid');
 
+  // Logger elements
+  const logFill = $('#logFill');
+  const logPercent = $('#logPercent');
+  const logSummary = $('#logSummary');
+  const logGlassBtn = $('#logGlassBtn');
+  const logBottleBtn = $('#logBottleBtn');
+  const logCustomInput = $('#logCustomInput');
+  const logCustomBtn = $('#logCustomBtn');
+  const logResetBtn = $('#logResetBtn');
+  const streakDisplay = $('#streakDisplay');
+  const historyDisplay = $('#historyDisplay');
+  const historyPopup = $('#historyPopup');
+  const historyDays = $('#historyDays');
+
+  // Adjustment
+  const adjustmentDisplay = $('#adjustmentDisplay');
+  const adjBtns = $$('.adj-btn');
+
   // ========== STATE ==========
   let weightUnit = 'kg';
   let heightUnit = 'cm';
   let activityVal = 0;
   let weatherVal = 250;
-  let currentResult = null;
+  let currentResult = null; // { totalMl, liters, glasses, bottles, cups, base, activityVal, weatherVal, healthVal, bsaAdjust, bmi, bmiCategory, bmiCls, hydrationStatus, hydrationCls, hydrationDesc, schedule, pct, adjustedTotalMl? }
+  let todaysLog = { date: '', logged: 0 }; // logged in ml
+  let streak = 0;
+  let history = []; // array of { date, completed } for last 7 days
+  let adjustment = 0; // extra ml added via quick adjustments
+
   let toastTimeout = null;
 
-  // ========== LOCAL STORAGE KEYS ==========
-  const LS_THEME = 'water_intake_theme';
-  const LS_FORM = 'water_intake_form';
-
-  // ========== CITIES ==========
-  const CITIES = [
-    ['New York, USA', 40.71, -74.01], ['Los Angeles, USA', 34.05, -118.24],
-    ['Toronto, Canada', 43.65, -79.38], ['Mexico City, Mexico', 19.43, -99.13],
-    ['São Paulo, Brazil', -23.55, -46.63], ['Buenos Aires, Argentina', -34.60, -58.38],
-    ['London, UK', 51.51, -0.13], ['Paris, France', 48.85, 2.35],
-    ['Berlin, Germany', 52.52, 13.40], ['Madrid, Spain', 40.42, -3.70],
-    ['Rome, Italy', 41.90, 12.50], ['Amsterdam, Netherlands', 52.37, 4.90],
-    ['Stockholm, Sweden', 59.33, 18.07], ['Warsaw, Poland', 52.23, 21.01],
-    ['Moscow, Russia', 55.76, 37.62], ['Istanbul, Turkey', 41.01, 28.98],
-    ['Dubai, UAE', 25.20, 55.27], ['Riyadh, Saudi Arabia', 24.71, 46.68],
-    ['Tel Aviv, Israel', 32.08, 34.78], ['Tehran, Iran', 35.69, 51.39],
-    ['Cairo, Egypt', 30.04, 31.24], ['Lagos, Nigeria', 6.52, 3.38],
-    ['Nairobi, Kenya', -1.29, 36.82], ['Johannesburg, South Africa', -26.20, 28.05],
-    ['Mumbai, India', 19.08, 72.88], ['Delhi, India', 28.61, 77.21],
-    ['Bangalore, India', 12.97, 77.59], ['Karachi, Pakistan', 24.86, 67.00],
-    ['Dhaka, Bangladesh', 23.81, 90.41], ['Beijing, China', 39.90, 116.41],
-    ['Shanghai, China', 31.23, 121.47], ['Tokyo, Japan', 35.68, 139.65],
-    ['Seoul, South Korea', 37.57, 126.98], ['Singapore', 1.35, 103.82],
-    ['Bangkok, Thailand', 13.76, 100.50], ['Jakarta, Indonesia', -6.21, 106.85],
-    ['Manila, Philippines', 14.60, 120.98], ['Kuala Lumpur, Malaysia', 3.14, 101.69],
-    ['Sydney, Australia', -33.87, 151.21], ['Melbourne, Australia', -37.81, 144.96],
-  ].sort((a,b)=> a[0].localeCompare(b[0]));
-
-  // ========== POPULATE CITY SELECT ==========
-  CITIES.forEach(([name, lat, lon])=>{
-    const opt = document.createElement('option');
-    opt.value = `${lat},${lon}`;
-    opt.textContent = name;
-    locationSelect.appendChild(opt);
-  });
-
-  // ========== UNIT TOGGLES ==========
-  // Weight
-  $$('[data-unit]').forEach(btn=>{
-    btn.addEventListener('click', function(){
-      $$('[data-unit]').forEach(b=>{ b.classList.remove('active'); b.setAttribute('aria-pressed','false'); });
-      this.classList.add('active');
-      this.setAttribute('aria-pressed','true');
-      weightUnit = this.dataset.unit;
-      weightInput.placeholder = weightUnit === 'kg' ? 'e.g. 68' : 'e.g. 150';
-      saveFormState();
-    });
-  });
-
-  // Height
-  $$('[data-hunit]').forEach(btn=>{
-    btn.addEventListener('click', function(){
-      $$('[data-hunit]').forEach(b=>{ b.classList.remove('active'); b.setAttribute('aria-pressed','false'); });
-      this.classList.add('active');
-      this.setAttribute('aria-pressed','true');
-      heightUnit = this.dataset.hunit;
-      if(heightUnit === 'cm'){
-        cmRow.style.display='flex';
-        ftInRow.classList.remove('show');
-        heightInput.required = true;
-        heightFt.required = false;
-        heightIn.required = false;
-      } else {
-        cmRow.style.display='none';
-        ftInRow.classList.add('show');
-        heightInput.required = false;
-        heightFt.required = true;
-        heightIn.required = true;
-      }
-      saveFormState();
-    });
-  });
-
-  // ========== PILL GROUPS ==========
-  function wirePillGroup(id, setter){
-    const group = document.getElementById(id);
-    if(!group) return;
-    group.querySelectorAll('.pill').forEach(btn=>{
-      btn.addEventListener('click', function(){
-        group.querySelectorAll('.pill').forEach(b=>{ b.classList.remove('active'); b.setAttribute('aria-pressed','false'); });
-        this.classList.add('active');
-        this.setAttribute('aria-pressed','true');
-        setter(Number(this.dataset.val));
-        saveFormState();
-      });
-    });
-  }
-  wirePillGroup('activityGroup', v => { activityVal = v; });
-  wirePillGroup('weatherGroup', v => { weatherVal = v; });
-
-  // ========== WEATHER ==========
-  function applyTemperature(tempC, label){
-    let targetVal, pillIndex;
-    if(tempC < 15){ targetVal = 0; pillIndex = 0; }
-    else if(tempC <= 28){ targetVal = 250; pillIndex = 1; }
-    else { targetVal = 750; pillIndex = 2; }
-
-    const pills = document.querySelectorAll('#weatherGroup .pill');
-    pills.forEach((p,i)=>{
-      p.classList.toggle('active', i===pillIndex);
-      p.setAttribute('aria-pressed', i===pillIndex ? 'true' : 'false');
-    });
-    weatherVal = targetVal;
-
-    weatherStatus.textContent = `${label}: ${Math.round(tempC)}°C detected — weather set automatically (you can still override above).`;
-    weatherStatus.className = 'weather-status ok';
-    saveFormState();
-  }
-
-  async function fetchTemperature(lat, lon, label){
-    weatherStatus.textContent = 'Checking current temperature…';
-    weatherStatus.className = 'weather-status';
+  // ========== LOCAL STORAGE HELPERS ==========
+  function loadData(){
     try{
-      const res = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m`);
-      if(!res.ok) throw new Error('bad response');
-      const data = await res.json();
-      const tempC = data.current && data.current.temperature_2m;
-      if(typeof tempC !== 'number') throw new Error('no temp');
-      applyTemperature(tempC, label);
-    } catch(err){
-      weatherStatus.textContent = "Couldn't fetch live temperature — please select Weather manually.";
-      weatherStatus.className = 'weather-status err';
-    }
+      const raw = localStorage.getItem(LOG_KEY);
+      if(raw){
+        const data = JSON.parse(raw);
+        const today = new Date().toISOString().split('T')[0];
+        if(data.date === today){
+          todaysLog = data;
+        } else {
+          // new day, save previous day's completion
+          const prevDate = data.date;
+          const prevLogged = data.logged || 0;
+          // we need to know target for that day? we can store target with log
+          // for simplicity, we'll check if prevLogged >= target from that day? we don't store target.
+          // We'll compute target based on previous inputs? Not stored. So we'll just track if logged > 0.
+          // Better: store target in log data.
+          // We'll extend log data to include target. For now, we'll not store history automatically.
+          // We'll compute completion when user calculates and logs.
+          // We'll store history separately.
+          todaysLog = { date: today, logged: 0 };
+        }
+      } else {
+        const today = new Date().toISOString().split('T')[0];
+        todaysLog = { date: today, logged: 0 };
+      }
+      // Load history
+      const histRaw = localStorage.getItem('water_history');
+      if(histRaw){
+        history = JSON.parse(histRaw);
+      } else {
+        history = [];
+      }
+      // Load streak
+      const streakRaw = localStorage.getItem('water_streak');
+      if(streakRaw){
+        streak = parseInt(streakRaw,10) || 0;
+      }
+    } catch(e){}
+    updateLogUI();
+    updateStreakUI();
+    updateHistoryUI();
   }
 
-  locationSelect.addEventListener('change', function(){
-    if(!this.value) return;
-    const [lat, lon] = this.value.split(',').map(Number);
-    fetchTemperature(lat, lon, this.options[this.selectedIndex].text);
-    saveFormState();
-  });
+  function saveLog(){
+    try{
+      localStorage.setItem(LOG_KEY, JSON.stringify(todaysLog));
+      localStorage.setItem('water_history', JSON.stringify(history));
+      localStorage.setItem('water_streak', String(streak));
+    } catch(e){}
+  }
 
-  geoBtn.addEventListener('click', function(){
-    if(!navigator.geolocation){
-      weatherStatus.textContent = 'Location detection is not supported in this browser.';
-      weatherStatus.className = 'weather-status err';
+  function updateLogUI(){
+    const today = new Date().toISOString().split('T')[0];
+    if(todaysLog.date !== today){
+      // reset for new day
+      todaysLog = { date: today, logged: 0 };
+      saveLog();
+    }
+    const target = currentResult ? currentResult.totalMl + adjustment : 0;
+    const logged = todaysLog.logged || 0;
+    const pct = target > 0 ? Math.min(1, logged / target) : 0;
+    logFill.style.width = (pct*100)+'%';
+    logPercent.textContent = Math.round(pct*100)+'%';
+    logSummary.textContent = `${logged} ml / ${target} ml`;
+  }
+
+  function updateStreakUI(){
+    streakDisplay.textContent = `🔥 Streak: ${streak} days`;
+  }
+
+  function updateHistoryUI(){
+    const today = new Date().toISOString().split('T')[0];
+    // show last 7 days including today
+    const days = [];
+    for(let i=6; i>=0; i--){
+      const d = new Date();
+      d.setDate(d.getDate() - i);
+      const ds = d.toISOString().split('T')[0];
+      const found = history.find(h => h.date === ds);
+      const completed = found ? found.completed : false;
+      const isToday = ds === today;
+      days.push({ date: ds, completed, isToday });
+    }
+    historyDays.innerHTML = days.map(d => {
+      const emoji = d.isToday ? '📌' : (d.completed ? '✅' : '❌');
+      const cls = d.completed ? '' : 'style="opacity:0.5;"';
+      return `<span ${cls} title="${d.date}">${emoji}</span>`;
+    }).join(' ');
+  }
+
+  function logWater(amount){
+    if(!currentResult){
+      showToast('Please calculate your target first.', 'error');
       return;
     }
-    this.disabled = true;
-    weatherStatus.textContent = 'Detecting your location…';
-    weatherStatus.className = 'weather-status';
-    navigator.geolocation.getCurrentPosition(
-      (pos)=>{
-        geoBtn.disabled = false;
-        locationSelect.value = '';
-        fetchTemperature(pos.coords.latitude, pos.coords.longitude, 'Your location');
-        saveFormState();
-      },
-      ()=>{
-        geoBtn.disabled = false;
-        weatherStatus.textContent = 'Location permission denied — please select a city or Weather manually.';
-        weatherStatus.className = 'weather-status err';
-      },
-      { timeout: 8000 }
-    );
-  });
+    const today = new Date().toISOString().split('T')[0];
+    if(todaysLog.date !== today){
+      todaysLog = { date: today, logged: 0 };
+    }
+    todaysLog.logged = (todaysLog.logged || 0) + amount;
+    saveLog();
+    updateLogUI();
+    // check if target met
+    const target = currentResult.totalMl + adjustment;
+    if(target > 0 && todaysLog.logged >= target){
+      // mark today as completed in history
+      const existing = history.find(h => h.date === today);
+      if(existing){
+        existing.completed = true;
+      } else {
+        history.push({ date: today, completed: true });
+      }
+      // update streak
+      let streakCount = 0;
+      const sorted = history.sort((a,b)=> new Date(a.date) - new Date(b.date));
+      for(let i=sorted.length-1; i>=0; i--){
+        if(sorted[i].completed){
+          streakCount++;
+        } else {
+          break;
+        }
+      }
+      streak = streakCount;
+      saveLog();
+      updateStreakUI();
+      updateHistoryUI();
+      showToast('🎉 Goal reached! Keep it up!', 'success', 2000);
+    } else {
+      // if not met, ensure today not marked completed
+      const existing = history.find(h => h.date === today);
+      if(existing && existing.completed){
+        // if user logged but not met? we keep completed true only if met
+        // we'll recompute
+        const targetNow = currentResult.totalMl + adjustment;
+        if(todaysLog.logged < targetNow){
+          existing.completed = false;
+          saveLog();
+          updateHistoryUI();
+        }
+      }
+    }
+    // re-check completion
+    const targetNow = currentResult.totalMl + adjustment;
+    if(todaysLog.logged >= targetNow){
+      const existing = history.find(h => h.date === today);
+      if(!existing || !existing.completed){
+        if(existing) existing.completed = true;
+        else history.push({ date: today, completed: true });
+        // update streak
+        let streakCount = 0;
+        const sorted = history.sort((a,b)=> new Date(a.date) - new Date(b.date));
+        for(let i=sorted.length-1; i>=0; i--){
+          if(sorted[i].completed){
+            streakCount++;
+          } else {
+            break;
+          }
+        }
+        streak = streakCount;
+        saveLog();
+        updateStreakUI();
+        updateHistoryUI();
+        showToast('🎉 Goal reached! Keep it up!', 'success', 2000);
+      }
+    }
+    showToast(`Logged ${amount} ml 💧`, 'info', 1500);
+  }
 
   // ========== TOAST ==========
   function showToast(message, type='info', duration=3000){
     if(toastTimeout){ clearTimeout(toastTimeout); toastTimeout=null; }
     toast.textContent = message;
     toast.className = 'toast '+type;
-    // Force reflow
     void toast.offsetWidth;
     toast.classList.add('show');
     toastTimeout = setTimeout(()=>{
@@ -1289,13 +1463,15 @@
   function buildResultText(d){
     const schedule = d.schedule || [];
     const scheduleText = schedule.length ? schedule.map(s => `${s.time} - ${s.amount} ml`).join('\n') : 'Not available';
+    const adj = d.adjustment || 0;
+    const adjustedTotal = d.totalMl + adj;
     return `Daily Water Intake
 ─────────────────
-Water: ${d.liters.toFixed(1)} L
-${Math.round(d.totalMl)} ml
-${d.glasses} Glasses
-${d.bottles} Bottles
-${d.cups} Cups
+Water: ${(adjustedTotal/1000).toFixed(1)} L
+${Math.round(adjustedTotal)} ml
+${Math.round(adjustedTotal/GLASS_ML)} Glasses
+${Math.round(adjustedTotal/BOTTLE_ML)} Bottles
+${Math.round(adjustedTotal/CUP_ML)} Cups
 
 BMI: ${d.bmi.toFixed(1)} (${d.bmiCategory})
 Hydration Status: ${d.hydrationStatus}
@@ -1312,7 +1488,7 @@ Generated using Water Intake Calculator`;
       showToast('Please calculate your water intake first.', 'error');
       return;
     }
-    const text = buildResultText(currentResult);
+    const text = buildResultText({...currentResult, adjustment});
     if(navigator.clipboard && navigator.clipboard.writeText){
       navigator.clipboard.writeText(text).then(()=>{
         showToast('✅ Results copied to clipboard!', 'success');
@@ -1345,14 +1521,13 @@ Generated using Water Intake Calculator`;
       showToast('Please calculate your water intake first.', 'error');
       return;
     }
-    const text = buildResultText(currentResult);
+    const text = buildResultText({...currentResult, adjustment});
     if(navigator.share){
       navigator.share({
         title: 'My Daily Water Intake',
         text: text,
       }).catch(()=>{});
     } else {
-      // Fallback: copy
       fallbackCopy(text);
       showToast('📤 Copied because sharing isn\'t supported.', 'info');
     }
@@ -1369,6 +1544,7 @@ Generated using Water Intake Calculator`;
       return;
     }
     const d = currentResult;
+    const adjustedTotal = d.totalMl + (adjustment || 0);
     const { jsPDF } = window.jspdf;
     const doc = new jsPDF({ unit:'mm', format:'a4' });
     const pageW = 210;
@@ -1390,7 +1566,6 @@ Generated using Water Intake Calculator`;
       y += 4;
     }
 
-    // Title
     doc.setFontSize(22);
     doc.setFont('helvetica', 'bold');
     doc.text('💧 Daily Water Intake Report', pageW/2, y, { align:'center' });
@@ -1401,20 +1576,17 @@ Generated using Water Intake Calculator`;
     const dateStr = new Date().toLocaleDateString('en-US', { weekday:'long', year:'numeric', month:'long', day:'numeric' });
     doc.text('Generated: '+dateStr, pageW/2, y, { align:'center' });
     y += 8;
-
     hr();
 
     text('Water Intake', 16, 'bold');
-    text(`• ${d.liters.toFixed(1)} L  (${Math.round(d.totalMl)} ml)`, 12);
-    text(`• ${d.glasses} glasses  • ${d.bottles} bottles  • ${d.cups} cups`, 12);
+    text(`• ${(adjustedTotal/1000).toFixed(1)} L  (${Math.round(adjustedTotal)} ml)`, 12);
+    text(`• ${Math.round(adjustedTotal/GLASS_ML)} glasses  • ${Math.round(adjustedTotal/BOTTLE_ML)} bottles  • ${Math.round(adjustedTotal/CUP_ML)} cups`, 12);
     y += 2;
-
     hr();
 
     text(`BMI: ${d.bmi.toFixed(1)} — ${d.bmiCategory}`, 12);
     text(`Hydration Status: ${d.hydrationStatus}`, 12);
     y += 2;
-
     hr();
 
     text('Suggested Drinking Schedule', 14, 'bold');
@@ -1426,15 +1598,20 @@ Generated using Water Intake Calculator`;
       text('  Not available', 11);
     }
     y += 2;
+    hr();
 
+    // Log summary
+    text('Today\'s Log', 14, 'bold');
+    const logged = todaysLog.logged || 0;
+    const target = adjustedTotal;
+    text(`  Logged: ${logged} ml  (${Math.round(Math.min(1, logged/target)*100)}% of target)`, 12);
+    y += 2;
     hr();
 
     doc.setFontSize(10);
     doc.setFont('helvetica', 'italic');
     doc.text('Generated using Water Intake Calculator', pageW/2, y, { align:'center' });
     y += 6;
-
-    // Footer
     doc.setFontSize(9);
     doc.setFont('helvetica', 'normal');
     doc.setTextColor(150);
@@ -1446,15 +1623,16 @@ Generated using Water Intake Calculator`;
 
   // ========== RESET ==========
   resetBtn.addEventListener('click', function(){
-    // Clear inputs
+    ageInput.value = '';
     weightInput.value = '';
     heightInput.value = '';
     heightFt.value = '';
     heightIn.value = '';
     healthSelect.value = '0';
     locationSelect.value = '';
+    adjustment = 0;
+    adjustmentDisplay.textContent = '';
 
-    // Reset units
     $$('[data-unit]').forEach(b=>{ b.classList.remove('active'); b.setAttribute('aria-pressed','false'); });
     const kgBtn = document.querySelector('[data-unit="kg"]');
     if(kgBtn){ kgBtn.classList.add('active'); kgBtn.setAttribute('aria-pressed','true'); }
@@ -1471,7 +1649,6 @@ Generated using Water Intake Calculator`;
     heightFt.required = false;
     heightIn.required = false;
 
-    // Reset pills
     ['activityGroup','weatherGroup'].forEach(gid=>{
       const g = document.getElementById(gid);
       if(!g) return;
@@ -1485,21 +1662,18 @@ Generated using Water Intake Calculator`;
     activityVal = 0;
     weatherVal = 250;
 
-    // Reset weather status
     weatherStatus.textContent = '';
     weatherStatus.className = 'weather-status';
     geoBtn.disabled = false;
 
-    // Hide result
     resultCard.classList.add('empty');
     currentResult = null;
 
-    // Clear errors
     weightError.style.display='none';
     heightError.style.display='none';
+    ageError.style.display='none';
 
-    // Clear localStorage form state
-    localStorage.removeItem(LS_FORM);
+    localStorage.removeItem(FORM_KEY);
     showToast('🔄 All fields reset', 'info', 2000);
   });
 
@@ -1522,21 +1696,25 @@ Generated using Water Intake Calculator`;
   }
 
   function generateSchedule(totalMl){
-    const times = ['8:00 AM','10:00 AM','12:00 PM','2:00 PM','4:00 PM','6:00 PM','8:00 PM','10:00 PM'];
+    // if age > 65, use more frequent smaller sips
+    const age = parseInt(ageInput.value,10);
+    let times;
+    if(age > 65){
+      times = ['8:00 AM','9:30 AM','11:00 AM','12:30 PM','2:00 PM','3:30 PM','5:00 PM','6:30 PM','8:00 PM','9:30 PM'];
+    } else {
+      times = ['8:00 AM','10:00 AM','12:00 PM','2:00 PM','4:00 PM','6:00 PM','8:00 PM','10:00 PM'];
+    }
     const count = times.length;
     let remaining = totalMl;
     const amounts = [];
-    // Distribute evenly with slight variation
     const base = Math.floor(totalMl / count);
     let extra = totalMl - base * count;
     for(let i=0; i<count; i++){
       let amt = base + (i < extra ? 1 : 0);
-      // Round to nearest 50
       amt = Math.round(amt / 50) * 50;
       if(amt < 50) amt = 50;
       amounts.push(amt);
     }
-    // Adjust last to match total
     let sum = amounts.reduce((a,b)=>a+b,0);
     let diff = totalMl - sum;
     if(diff !== 0){
@@ -1549,6 +1727,16 @@ Generated using Water Intake Calculator`;
   form.addEventListener('submit', function(e){
     e.preventDefault();
 
+    // Validate age
+    const age = parseInt(ageInput.value,10);
+    if(!age || age <= 0){
+      ageError.textContent = 'Please enter a valid age.';
+      ageError.style.display='block';
+      ageInput.focus();
+      return;
+    }
+    ageError.style.display='none';
+
     // Validate weight
     let weightKg = parseFloat(weightInput.value);
     if(!weightKg || weightKg <= 0) {
@@ -1560,7 +1748,6 @@ Generated using Water Intake Calculator`;
     weightError.style.display='none';
     if(weightUnit === 'lbs') weightKg = weightKg * 0.453592;
 
-    // Validate height
     let heightCm;
     if(heightUnit === 'cm'){
       heightCm = parseFloat(heightInput.value);
@@ -1583,10 +1770,16 @@ Generated using Water Intake Calculator`;
     }
     heightError.style.display='none';
 
+    // Determine baseline coefficient based on age
+    let coeff;
+    if(age < 18) coeff = 35;
+    else if(age <= 65) coeff = 33;
+    else coeff = 30;
+
     const healthVal = Number(healthSelect.value);
 
     // Base
-    const base = weightKg * BASE_PER_KG;
+    const base = weightKg * coeff;
 
     // BSA
     const bsa = Math.sqrt((heightCm * weightKg) / 3600);
@@ -1627,18 +1820,23 @@ Generated using Water Intake Calculator`;
       hydrationDesc: hydInfo.desc,
       schedule,
       pct: Math.min(1, pct),
+      ageCoeff: coeff,
     };
 
     currentResult = result;
     renderResult(result);
     saveFormState();
+    // reset adjustment
+    adjustment = 0;
+    adjustmentDisplay.textContent = '';
+    // update log UI with new target
+    updateLogUI();
     showToast('✅ Hydration target calculated!', 'success', 2000);
   });
 
   function renderResult(d){
     resultCard.classList.remove('empty');
 
-    // Animate numbers (count up)
     const targetL = d.liters;
     const duration = 800;
     const startTime = performance.now();
@@ -1656,16 +1854,13 @@ Generated using Water Intake Calculator`;
       requestAnimationFrame(step);
     }
 
-    // Liters
     animateNumber(resultL, targetL, 1, '');
     resultMl.textContent = Math.round(d.totalMl) + ' ml recommended for today';
 
-    // Equivalents
     eqGlasses.textContent = d.glasses;
     eqBottles.textContent = d.bottles;
     eqCups.textContent = d.cups;
 
-    // Gauge
     const pct = Math.min(1, d.totalMl / 3500);
     const rect = waveRect;
     const fillY = 196 - (pct * 178);
@@ -1676,7 +1871,7 @@ Generated using Water Intake Calculator`;
 
     // Breakdown
     const rows = [
-      ['Base (weight)', Math.round(d.base) + ' ml'],
+      ['Base (age/weight)', Math.round(d.base) + ' ml'],
       ['Activity', (d.activityVal>=0?'+':'') + Math.round(d.activityVal) + ' ml'],
       ['Weather', (d.weatherVal>=0?'+':'') + Math.round(d.weatherVal) + ' ml'],
       ['Health condition', (d.healthVal>=0?'+':'') + Math.round(d.healthVal) + ' ml'],
@@ -1685,20 +1880,25 @@ Generated using Water Intake Calculator`;
     breakdown.innerHTML = rows.map(r => `<div class="breakdown-row"><span>${r[0]}</span><b>${r[1]}</b></div>`).join('')
       + `<div class="breakdown-row total"><span>Total</span><b>${Math.round(d.totalMl)} ml</b></div>`;
 
-    // Tip
+    // Tip (including age-specific)
+    let ageTip = '';
+    const age = parseInt(ageInput.value,10);
+    if(age > 65){
+      ageTip = '👴 As you\'re over 65, remember that thirst sensation diminishes — drink on a schedule, not just when thirsty. ';
+    } else if(age < 18){
+      ageTip = '🧒 Growing bodies need more water per kilogram — keep sipping throughout the day! ';
+    }
     const tips = [
       "Spread intake across the day rather than drinking it all at once — your kidneys can only process about 800–1000 ml per hour.",
       "Thirst is a lagging signal. If you're already thirsty, you're mildly behind on hydration.",
       "Pale yellow urine is a simple day-to-day hydration check.",
       "Add a pinch of electrolytes on very hot or high-sweat days — plain water alone won't replace lost sodium."
     ];
-    tipBox.textContent = '💡 ' + tips[Math.floor(Math.random()*tips.length)];
+    tipBox.textContent = ageTip + '💡 ' + tips[Math.floor(Math.random()*tips.length)];
 
-    // BMI
     bmiValue.textContent = d.bmi.toFixed(1);
     bmiBadge.innerHTML = `<span class="badge ${d.bmiCls}">${d.bmiCategory}</span>`;
 
-    // Hydration status
     hydrationStatusValue.textContent = d.hydrationStatus;
     hydrationBadge.innerHTML = `<span class="badge ${d.hydrationCls}">${d.hydrationStatus}</span>`;
 
@@ -1707,19 +1907,87 @@ Generated using Water Intake Calculator`;
       `<div class="schedule-item"><span class="time">${s.time}</span><span class="amount">${s.amount} ml</span></div>`
     ).join('');
 
-    // Scroll to result
     resultCard.scrollIntoView({behavior:'smooth', block:'nearest'});
+    // update log UI
+    updateLogUI();
   }
+
+  // ========== QUICK ADJUSTMENTS ==========
+  adjBtns.forEach(btn => {
+    btn.addEventListener('click', function(){
+      if(!currentResult){
+        showToast('Please calculate your target first.', 'error');
+        return;
+      }
+      const add = parseInt(this.dataset.add,10);
+      adjustment = (adjustment || 0) + add;
+      if(adjustment < 0) adjustment = 0;
+      adjustmentDisplay.textContent = adjustment > 0 ? `+${adjustment} ml adjustment applied` : '';
+      // Update result display to show adjusted total
+      const adjustedTotal = currentResult.totalMl + adjustment;
+      const liters = adjustedTotal / 1000;
+      resultL.textContent = liters.toFixed(1);
+      resultMl.textContent = Math.round(adjustedTotal) + ' ml (adjusted)';
+      eqGlasses.textContent = Math.round(adjustedTotal / GLASS_ML);
+      eqBottles.textContent = Math.round(adjustedTotal / BOTTLE_ML);
+      eqCups.textContent = Math.round(adjustedTotal / CUP_ML);
+      // Update gauge
+      const pct = Math.min(1, adjustedTotal / 3500);
+      const fillY = 196 - (pct * 178);
+      requestAnimationFrame(()=>{
+        waveRect.setAttribute('y', fillY);
+      });
+      gaugePct.textContent = Math.round(pct*100) + '%';
+      // Re-generate schedule based on adjusted total
+      const newSchedule = generateSchedule(adjustedTotal);
+      scheduleGrid.innerHTML = newSchedule.map(s =>
+        `<div class="schedule-item"><span class="time">${s.time}</span><span class="amount">${s.amount} ml</span></div>`
+      ).join('');
+      // Update log target (the target for log is adjusted)
+      updateLogUI();
+      showToast(`Adjustment ${add>=0?'+':''}${add} ml applied`, 'info', 1500);
+    });
+  });
+
+  // ========== LOGGER EVENT BINDING ==========
+  logGlassBtn.addEventListener('click', function(){ logWater(GLASS_ML); });
+  logBottleBtn.addEventListener('click', function(){ logWater(BOTTLE_ML); });
+  logCustomBtn.addEventListener('click', function(){
+    const val = parseFloat(logCustomInput.value);
+    if(val && val > 0){
+      logWater(val);
+      logCustomInput.value = '';
+    } else {
+      showToast('Enter a valid amount in ml.', 'error');
+    }
+  });
+  logResetBtn.addEventListener('click', function(){
+    const today = new Date().toISOString().split('T')[0];
+    todaysLog = { date: today, logged: 0 };
+    // remove today from history if exists
+    const idx = history.findIndex(h => h.date === today);
+    if(idx !== -1){
+      history.splice(idx, 1);
+    }
+    saveLog();
+    updateLogUI();
+    updateHistoryUI();
+    showToast('Today\'s log reset.', 'info', 1500);
+  });
+  historyDisplay.addEventListener('click', function(){
+    const isOpen = historyPopup.style.display === 'block';
+    historyPopup.style.display = isOpen ? 'none' : 'block';
+  });
 
   // ========== DARK MODE ==========
   function setTheme(theme){
     const isDark = theme === 'dark';
     document.documentElement.setAttribute('data-theme', isDark ? 'dark' : 'light');
-    localStorage.setItem(LS_THEME, isDark ? 'dark' : 'light');
+    localStorage.setItem(THEME_KEY, isDark ? 'dark' : 'light');
   }
 
   function getPreferredTheme(){
-    const stored = localStorage.getItem(LS_THEME);
+    const stored = localStorage.getItem(THEME_KEY);
     if(stored === 'dark' || stored === 'light') return stored;
     return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
   }
@@ -1729,13 +1997,13 @@ Generated using Water Intake Calculator`;
     setTheme(current === 'dark' ? 'light' : 'dark');
   });
 
-  // Init theme
   setTheme(getPreferredTheme());
 
   // ========== SAVE / RESTORE FORM STATE ==========
   function saveFormState(){
     try{
       const state = {
+        age: ageInput.value,
         weight: weightInput.value,
         weightUnit,
         height: heightInput.value,
@@ -1747,15 +2015,16 @@ Generated using Water Intake Calculator`;
         health: healthSelect.value,
         location: locationSelect.value,
       };
-      localStorage.setItem(LS_FORM, JSON.stringify(state));
+      localStorage.setItem(FORM_KEY, JSON.stringify(state));
     } catch(e){}
   }
 
   function restoreFormState(){
     try{
-      const raw = localStorage.getItem(LS_FORM);
+      const raw = localStorage.getItem(FORM_KEY);
       if(!raw) return;
       const state = JSON.parse(raw);
+      if(state.age) ageInput.value = state.age;
       if(state.weight) weightInput.value = state.weight;
       if(state.weightUnit){
         const btn = document.querySelector(`[data-unit="${state.weightUnit}"]`);
@@ -1791,7 +2060,6 @@ Generated using Water Intake Calculator`;
       if(state.heightFt) heightFt.value = state.heightFt;
       if(state.heightIn) heightIn.value = state.heightIn;
 
-      // Activity
       if(state.activity !== undefined){
         const g = document.getElementById('activityGroup');
         if(g){
@@ -1805,7 +2073,6 @@ Generated using Water Intake Calculator`;
         }
       }
 
-      // Weather
       if(state.weather !== undefined){
         const g = document.getElementById('weatherGroup');
         if(g){
@@ -1824,10 +2091,10 @@ Generated using Water Intake Calculator`;
     } catch(e){}
   }
 
-  // Restore on load
   restoreFormState();
 
   // Auto-save on input change
+  ageInput.addEventListener('input', saveFormState);
   weightInput.addEventListener('input', saveFormState);
   heightInput.addEventListener('input', saveFormState);
   heightFt.addEventListener('input', saveFormState);
@@ -1835,7 +2102,10 @@ Generated using Water Intake Calculator`;
   healthSelect.addEventListener('change', saveFormState);
   locationSelect.addEventListener('change', saveFormState);
 
-  // ========== HANDLE RESIZE FOR RESPONSIVENESS ==========
+  // ========== INIT LOGGING ==========
+  loadData();
+
+  // ========== HANDLE RESIZE ==========
   let resizeTimer;
   window.addEventListener('resize', ()=>{
     if(resizeTimer) cancelAnimationFrame(resizeTimer);
